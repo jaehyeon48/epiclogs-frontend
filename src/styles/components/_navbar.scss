@@ -51,8 +51,19 @@
   right: 1rem;
 }
 
-.navbar__auth-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+.navbar__login-button {
+  display: block;
+  padding: 0.6rem 1.6rem;
+  font-weight: 700;
+  color: $indigo;
+  border: 2px solid $indigo;
+  border-radius: 0.4rem;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $indigo;
+    color: $white;
+    transition: all ease 0.2s;
+  }
 }

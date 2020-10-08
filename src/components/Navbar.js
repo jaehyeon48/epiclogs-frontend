@@ -10,16 +10,11 @@ const Navbar = ({ }) => {
   }
 
   const guestLinks = (
-    <div className="navbar__auth-buttons">
-      <button
-        className="navbar__login-button"
-        type="button"
-      >Login</button>
-      <button
-        className="navbar__sign-up-button"
-        type="button"
-      >Sign Up</button>
-    </div>
+    <button
+      className="navbar__login-button"
+      type="button"
+    >Login
+    </button>
   );
   const authLinks = (
     <React.Fragment></React.Fragment>
