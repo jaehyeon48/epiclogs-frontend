@@ -1,0 +1,75 @@
+/* defining fonts partial scss file */
+
+/* korean fonts */
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 100;
+  src: url('./NotoSansKR-Thin.otf');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 300;
+  src: url('./NotoSansKR-Light.otf');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 400;
+  src: url('./NotoSansKR-Regular.otf');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+  src: url('./NotoSansKR-Medium.otf');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 700;
+  src: url('./NotoSansKR-Bold.otf');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-weight: 900;
+  src: url('./NotoSansKR-Black.otf');
+}
+
+/* eng fonts */
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 100;
+  src: url('./Poppins-Thin.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 300;
+  src: url('./Poppins-Light.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 400;
+  src: url('./Poppins-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 500;
+  src: url('./Poppins-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 700;
+  src: url('./Poppins-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-weight: 900;
+  src: url('./Poppins-Black.ttf');
+}
