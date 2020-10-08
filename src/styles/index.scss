@@ -1,2 +1,7 @@
+/* general styles */
 @import './font/font';
 @import './base/base';
+@import './base//colors';
+
+/* React Components' styles */
+@import './components/navbar.scss';
