@@ -28,7 +28,7 @@ const Navbar = ({ }) => {
   return (
     <nav className="navbar">
       <div className="navbar__contents">
-        <img src={Logo} alt="main logo" />
+        <img className="navbar__logo" src={Logo} alt="main logo" />
         <form className="navbar__search-form">
           <input
             className="navbar__input"
