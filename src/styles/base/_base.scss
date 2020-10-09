@@ -23,6 +23,10 @@ input {
   background-color: $main-background-color;
 }
 
+button {
+  outline: none;
+}
+
 button:disabled {
   background-color: $dark-gray !important;
   cursor: not-allowed !important;
