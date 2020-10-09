@@ -37,3 +37,21 @@ input.auth-input {
     transition: all ease 0.15s;
   }
 }
+
+button.auth-submit-button {
+  display: block;
+  width: 100%;
+  padding: 1.3rem 0;
+  background-color: $indigo;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: $white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all ease 0.15s;
+
+  &:hover {
+    background-color: darken($indigo, 17%);
+  }
+}
