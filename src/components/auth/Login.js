@@ -1,16 +1,82 @@
 import React, { useState, useEffect } from 'react';
+import isEmail from 'validator/lib/isEmail';
+import isLength from 'validator/lib/isLength';
 
 const Login = () => {
-  const [loginForm, setLoginForm] = useState({});
+  const [loginForm, setLoginForm] = useState({
+    email: '',
+    password: ''
+  });
+  const [isFirstLoginTry, setIsFirstLoginTry] = useState(true);
+  const [emailError, setEmailError] = useState(false);
+  const [pwError, setPwError] = useState(false);
+  const [disableSubmit, setDisableSubmit] = useState(false);
 
   const { email, password } = loginForm;
 
+  useEffect(() => {
+    if (!isFirstLoginTry && isEmail(email)) {
+      setEmailError(false);
+    }
+    else if (!isFirstLoginTry && !isEmail(email)) {
+      setEmailError(true);
+    }
+  }, [isFirstLoginTry, email, emailError]);
+
+  useEffect(() => {
+    if (!isFirstLoginTry && password.trim() !== '' && isLength(password, { min: 4 })) {
+      setPwError(false);
+    }
+    else if (!isFirstLoginTry && (password.trim() === '' || !isLength(password, { min: 4 }))) {
+      setPwError(true);
+    }
+  }, [isFirstLoginTry, password, pwError]);
+
+  useEffect(() => {
+    if (!emailError && !pwError) {
+      setDisableSubmit(false);
+    }
+    else {
+      setDisableSubmit(true);
+    }
+  }, [emailError, pwError, disableSubmit]);
+
   const handleChangeLoginForm = (e) => {
-    setLoginForm({ [e.target.name]: e.target.value });
+    setLoginForm({
+      ...loginForm,
+      [e.target.name]: e.target.value
+    });
   }
 
-  const handleSubmitLoginForm = () => {
+  const handleSubmitLoginForm = async (e) => {
+    e.preventDefault();
 
+    if (isFirstLoginTry) {
+      setIsFirstLoginTry(false);
+
+      if (!isEmail(email)) {
+        setEmailError(true);
+      }
+      if (password.trim() === '' || !isLength(password, { min: 4 })) {
+        setPwError(true);
+      }
+
+      // email and pw is valid, process form
+      if (!emailError && !pwError) {
+        console.log(email, password);
+      }
+      else {
+        // show alert message
+      }
+    }
+    else {
+      if (!emailError && !pwError) {
+        console.log(email, password);
+      }
+      else {
+        // show alert message
+      }
+    }
   }
 
   return (
@@ -25,30 +91,41 @@ const Login = () => {
           onSubmit={handleSubmitLoginForm}
         >
           <div className="login-page__email-form">
+            <label
+              htmlFor="login-email-input"
+              style={emailError ? { color: 'red' } : null}
+            >Email</label>
             <input
               id="login-email-input"
               className="auth-input login-page__email"
+              style={emailError ? { borderBottom: '2px solid red' } : null}
               type="text"
               name="email"
               value={email}
               onChange={handleChangeLoginForm}
             />
-            <label for="login-email-input">Email</label>
+            {emailError && (<small style={{ color: 'red' }}>Email is invalid.</small>)}
           </div>
           <div className="login-page__password-form">
+            <label
+              htmlFor="login-password-input"
+              style={pwError ? { color: 'red' } : null}
+            >Password</label>
             <input
               id="login-password-input"
               className="auth-input login-page__password"
+              style={pwError ? { borderBottom: '2px solid red' } : null}
               type="password"
               name="password"
               value={password}
               onChange={handleChangeLoginForm}
             />
-            <label for="login-password-input">Password</label>
+            {pwError && (<small style={{ color: 'red' }}>Password is invalid.</small>)}
           </div>
           <button
             type="submit"
             className="auth-submit-button login-page__submit-button"
+            disabled={disableSubmit}
           >LOGIN</button>
         </form>
       </section>
