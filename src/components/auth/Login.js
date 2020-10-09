@@ -36,7 +36,6 @@ const Login = () => {
             <label for="login-email-input">Email</label>
           </div>
           <div className="login-page__password-form">
-
             <input
               id="login-password-input"
               className="auth-input login-page__password"
@@ -47,6 +46,10 @@ const Login = () => {
             />
             <label for="login-password-input">Password</label>
           </div>
+          <button
+            type="submit"
+            className="auth-submit-button login-page__submit-button"
+          >LOGIN</button>
         </form>
       </section>
     </main>
