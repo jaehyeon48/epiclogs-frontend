@@ -1,0 +1,21 @@
+.login-page {
+}
+
+.login-page__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
+}
+
+.login-page__main-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 7rem;
+  color: $indigo;
+}
+
+.login-page__site-name {
+  margin: 0;
+  font-size: 3rem;
+}
