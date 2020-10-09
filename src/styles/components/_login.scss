@@ -19,3 +19,54 @@
   margin: 0;
   font-size: 3rem;
 }
+
+.login-page__auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6rem auto;
+  width: 55%;
+}
+
+.login-page__email-form {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  margin-bottom: 4rem;
+
+  & > label {
+    font-size: 2rem;
+  }
+}
+
+.login-page__email {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  &:focus ~ label {
+    color: $dark-green;
+    transition: all ease 0.15s;
+  }
+}
+
+.login-page__password-form {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+
+  & > label {
+    font-size: 2rem;
+  }
+}
+
+.login-page__password {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  &:focus ~ label {
+    color: $dark-green;
+    transition: all ease 0.15s;
+  }
+}
