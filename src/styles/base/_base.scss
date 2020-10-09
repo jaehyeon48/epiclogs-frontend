@@ -14,10 +14,11 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: #000;
-  background-color: #fdfffa;
+  color: $black;
+  background-color: $main-background-color;
 }
 
 input {
   box-sizing: border-box;
+  background-color: $main-background-color;
 }
