@@ -44,6 +44,7 @@ const Navbar = ({ }) => {
           <input
             className="navbar__input"
             type="text"
+            name="searchQuery"
             value={searchInput}
             placeholder="Search"
             onChange={handleSearchInput}
