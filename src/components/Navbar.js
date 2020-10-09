@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import Logo from '../img/full-logo.png';
 
 const Navbar = ({ }) => {
+  let history = useHistory();
   const [searchInput, setSearchInput] = useState('');
+
+  const redirectToHomePage = () => {
+    history.push('/');
+  }
+
+  const redirectToLoginPage = () => {
+    history.push('/login');
+  }
 
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
@@ -13,6 +23,7 @@ const Navbar = ({ }) => {
     <button
       className="navbar__login-button"
       type="button"
+      onClick={redirectToLoginPage}
     >Login
     </button>
   );
@@ -23,7 +34,12 @@ const Navbar = ({ }) => {
   return (
     <nav className="navbar">
       <div className="navbar__contents">
-        <img className="navbar__logo" src={Logo} alt="main logo" />
+        <img
+          className="navbar__logo"
+          src={Logo}
+          alt="main logo"
+          onClick={redirectToHomePage}
+        />
         <form className="navbar__search-form">
           <input
             className="navbar__input"
