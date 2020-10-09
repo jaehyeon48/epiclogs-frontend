@@ -22,3 +22,19 @@ input {
   box-sizing: border-box;
   background-color: $main-background-color;
 }
+
+/* auth-related inputs*/
+input.auth-input {
+  background: none;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid $dark-gray;
+  padding: 0.5rem 1rem;
+  font-size: 2.2rem;
+
+  &:focus {
+    border-bottom: 1px solid $dark-green;
+    box-shadow: 0 1px 0 0 $dark-green;
+    transition: all ease 0.15s;
+  }
+}
