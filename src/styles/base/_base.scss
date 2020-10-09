@@ -23,6 +23,11 @@ input {
   background-color: $main-background-color;
 }
 
+button:disabled {
+  background-color: $dark-gray !important;
+  cursor: not-allowed !important;
+}
+
 /* auth-related inputs*/
 input.auth-input {
   background: none;
