@@ -68,3 +68,24 @@
     transition: all ease 0.2s;
   }
 }
+
+.navbar__user-avatar {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  & > svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  &:hover > img {
+    box-shadow: 0 1px 3px $dark-gray;
+    transition: all ease 0.23s;
+  }
+
+  &:hover > svg {
+    color: $dark-gray;
+    transition: all ease 0.23s;
+  }
+}
