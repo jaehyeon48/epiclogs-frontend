@@ -18,6 +18,8 @@ export default function authReducer(state = initialState, action) {
     case LOAD_USER:
       return {
         ...state,
+        authLoading: false,
+        isAuthenticated: true,
         user: payload
       };
     case LOAD_USER_FAIL:

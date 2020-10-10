@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './App.scss';
@@ -9,7 +9,13 @@ import Login from './components/auth/Login';
 import GoogleCallback from './components/GoogleCallback';
 import Navbar from './components/Navbar';
 
+import { loadUser } from './actions/authAction';
+
 function App() {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>
