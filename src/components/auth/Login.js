@@ -64,7 +64,7 @@ const Login = ({
     if (isFirstLoginTry) {
       setIsFirstLoginTry(false);
       const isEmailValid = isEmail(email);
-      const isPwValid = (password.trim() === '' || !isLength(password, { min: 4 }));
+      const isPwValid = (password.trim() !== '' && isLength(password, { min: 4 }));
 
       if (!isEmailValid) {
         setEmailError(true);
@@ -76,21 +76,17 @@ const Login = ({
       // if email and pw are valid, process form
       if (isEmailValid && isPwValid) {
         login(loginForm);
-        console.log(1)
       }
       else {
         showAlert('Email or password is invalid.', 'error');
-        console.log(2)
       }
     }
     else {
       if (!emailError && !pwError) {
         login(loginForm);
-        console.log(3)
       }
       else {
         showAlert('Email or password is invalid.', 'error');
-        console.log(4)
       }
     }
   }
