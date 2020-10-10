@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import './App.scss';
 
 import store from './store';
+import PublicRoute from './components/PublicRoute';
 import Login from './components/auth/Login';
 import GoogleCallback from './components/GoogleCallback';
 import Navbar from './components/Navbar';
@@ -14,7 +15,7 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route path="/login" component={Login} exact />
+          <PublicRoute path="/login" component={Login} exact />
           <Route path="/oauth2/google-callback" component={GoogleCallback} exact />
         </Switch>
       </Router>
