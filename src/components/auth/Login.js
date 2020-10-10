@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import isEmail from 'validator/lib/isEmail';
 import isLength from 'validator/lib/isLength';
 
-const Login = () => {
+import {
+  auth,
+  login
+} from '../../actions/authAction';
+
+const Login = ({
+  login
+}) => {
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: ''
@@ -63,7 +71,7 @@ const Login = () => {
 
       // email and pw is valid, process form
       if (!emailError && !pwError) {
-        console.log(email, password);
+        login(loginForm);
       }
       else {
         // show alert message
@@ -71,7 +79,7 @@ const Login = () => {
     }
     else {
       if (!emailError && !pwError) {
-        console.log(email, password);
+        login(loginForm);
       }
       else {
         // show alert message
@@ -133,4 +141,10 @@ const Login = () => {
   );
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+
+});
+
+export default connect(mapStateToProps, {
+  login
+})(Login);
