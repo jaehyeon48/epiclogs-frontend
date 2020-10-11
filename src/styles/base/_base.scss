@@ -18,6 +18,14 @@ body {
   background-color: $main-background-color;
 }
 
+a {
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
+  }
+}
+
 input {
   box-sizing: border-box;
   background-color: $main-background-color;
