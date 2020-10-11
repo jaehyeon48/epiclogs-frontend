@@ -1,0 +1,219 @@
+.signup-page {
+}
+
+.signup-page__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
+}
+
+.signup-page__main-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 7rem;
+  color: $indigo;
+}
+
+.signup-page__site-name {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.signup-page__auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6rem auto;
+  width: 55%;
+}
+
+.signup-page__name-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 4rem;
+
+  & > label {
+    font-size: 2rem;
+  }
+
+  & > small {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+  }
+}
+
+.signup-page__name {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  &:focus ~ label {
+    color: $dark-green;
+    transition: all ease 0.15s;
+  }
+}
+
+.signup-page__email-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 4rem;
+
+  & > label {
+    font-size: 2rem;
+  }
+
+  & > small {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+  }
+}
+
+.signup-page__email {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  &:focus ~ label {
+    color: $dark-green;
+    transition: all ease 0.15s;
+  }
+}
+
+.signup-page__password-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & > label {
+    font-size: 2rem;
+  }
+
+  & > small {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+  }
+}
+
+.signup-page__password {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  &:focus ~ label {
+    color: $dark-green;
+    transition: all ease 0.15s;
+  }
+}
+
+.signup-page__submit-button {
+  margin-top: 7rem;
+}
+
+.signup-page__login {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+a.signup-page__login-link {
+  color: $indigo;
+
+  &:hover {
+    color: $light-gray;
+    transition: all ease 0.13s;
+  }
+}
+
+.signup-page__social-auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+}
+
+.signup-page__google-auth {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $dark-gray;
+  border-radius: 50%;
+  margin-right: 3rem;
+
+  & > svg {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+
+  &:hover {
+    border: 1px solid $indigo;
+    box-shadow: 0 0 0 1px $indigo;
+    transition: all ease 200ms;
+  }
+}
+
+.signup-page__github-auth {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid $dark-gray;
+  border-radius: 50%;
+  margin-left: 3rem;
+  color: $black;
+
+  & > svg {
+    width: 3.4rem;
+    height: 3.4rem;
+  }
+
+  &:hover {
+    border: 1px solid $indigo;
+    box-shadow: 0 0 0 1px $indigo;
+    transition: all ease 200ms;
+  }
+}
+
+.signup-page__social-section {
+  line-height: 1em;
+  position: relative;
+  outline: 0;
+  border: 0;
+  color: $black;
+  text-align: center;
+  height: 1.5em;
+  opacity: 0.8; // opacity of the text at the center
+  margin: 4rem 0;
+  &:before {
+    content: '';
+    // use the linear-gradient for the fading effect
+    // use a solid background color for a solid bar
+    // background: linear-gradient(to right, transparent, $black, transparent);
+    background: linear-gradient(
+      to right,
+      transparent 10%,
+      $light-gray 10% 30%,
+      $dark-gray 30% 70%,
+      $light-gray 70% 90%,
+      transparent 90%
+    );
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+  }
+  &:after {
+    content: attr(data-content);
+    position: relative;
+    display: inline-block;
+    padding: 0 0.5rem;
+    line-height: 1.5em;
+    color: $black; // color of the text at the center
+    background-color: $main-background-color;
+  }
+}
