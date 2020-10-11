@@ -89,3 +89,37 @@
     transition: all ease 0.23s;
   }
 }
+
+.navbar__user-dropdown {
+  position: absolute;
+  top: 1.5rem;
+  right: 0;
+  background-color: $white;
+  margin-top: 2rem;
+  width: 18rem;
+  box-shadow: 0 0 4px 1px $dark-gray;
+  cursor: pointer;
+
+  & > .navbar__dropdown {
+    padding: 1.5rem;
+    font-size: 1.8rem;
+    z-index: 99;
+  }
+
+  & > .navbar__dropdown:hover {
+    background-color: $light-gray;
+    transition: all ease 0.15s;
+  }
+}
+
+.navbar__position-wrapper {
+  position: relative;
+}
+
+.navbar__my-post {
+  display: block;
+}
+
+.navbar__profile {
+  display: block;
+}
