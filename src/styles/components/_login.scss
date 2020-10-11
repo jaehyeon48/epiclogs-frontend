@@ -85,6 +85,20 @@
   margin-top: 7rem;
 }
 
+.login-page__sign-up {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+a.login-page__sign-up-link {
+  color: $indigo;
+
+  &:hover {
+    color: $light-gray;
+    transition: all ease 0.13s;
+  }
+}
+
 .login-page__social-auth {
   display: flex;
   align-items: center;

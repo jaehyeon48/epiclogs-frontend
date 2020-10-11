@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
 import isLength from 'validator/lib/isLength';
 
@@ -141,6 +142,11 @@ const Login = ({
           >LOGIN</button>
         </form>
       </section>
+      <p
+        className="login-page__sign-up"
+      >
+        Doesn't have an account yet? <Link to="/signup" className="login-page__sign-up-link">Sign Up</Link>
+      </p>
       <hr className="login-page__social-section" data-content="Login With Social Account"></hr>
       <section className="login-page__social-auth">
         <a
