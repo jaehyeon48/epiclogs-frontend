@@ -104,6 +104,10 @@
     padding: 1.5rem;
     font-size: 1.8rem;
     z-index: 99;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $dark-gray;
+    }
   }
 
   & > .navbar__dropdown:hover {
@@ -116,10 +120,17 @@
   position: relative;
 }
 
-.navbar__my-post {
-  display: block;
+.navbar__profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > .navbar__user-name {
+    margin-top: 0.8rem;
+    font-weight: 700;
+  }
 }
 
-.navbar__profile {
+.navbar__my-post {
   display: block;
 }

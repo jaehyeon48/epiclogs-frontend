@@ -27,6 +27,7 @@ export default function authReducer(state = initialState, action) {
     case LOAD_USER_FAIL:
       return {
         ...state,
+        authLoading: false,
         user: {}
       };
     case LOGIN_SUCCESS:
