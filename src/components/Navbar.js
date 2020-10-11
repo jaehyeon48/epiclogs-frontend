@@ -12,6 +12,7 @@ const Navbar = ({
 }) => {
   let history = useHistory();
   const [searchInput, setSearchInput] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const redirectToHomePage = () => {
     history.push('/');
@@ -29,6 +30,19 @@ const Navbar = ({
     await logout();
   }
 
+  const openDropDown = (e) => {
+    e.preventDefault();
+
+    setIsDropdownOpen(true);
+    document.addEventListener('click', closeDropDown);
+  }
+
+  const closeDropDown = () => {
+    setIsDropdownOpen(false);
+
+    document.removeEventListener('click', closeDropDown);
+  }
+
   const guestLinks = (
     <button
       className="navbar__login-button"
@@ -39,7 +53,10 @@ const Navbar = ({
   );
   const authLinks = (
     <React.Fragment>
-      <div className="navbar__user-avatar">
+      <div
+        className="navbar__user-avatar"
+        onClick={openDropDown}
+      >
         <Avatar />
         <svg
           aria-hidden="true"
@@ -54,24 +71,26 @@ const Navbar = ({
             d="M31.3 192h257.3c17.8 0 26.7 21.5 14.1 34.1L174.1 354.8c-7.8 7.8-20.5 7.8-28.3 0L17.2 226.1C4.6 213.5 13.5 192 31.3 192z" />
         </svg>
       </div>
-      <div className="navbar__position-wrapper">
-        <div className="navbar__user-dropdown">
-          <Link
-            to=""
-            className="navbar__dropdown navbar__my-post"
-          >
-            My Posts
+      {isDropdownOpen && (
+        <div className="navbar__position-wrapper">
+          <div className="navbar__user-dropdown">
+            <Link
+              to="/1"
+              className="navbar__dropdown navbar__my-post"
+            >
+              My Posts
           </Link>
-          <Link
-            to=""
-            className="navbar__dropdown navbar__profile"
-          >Profile</Link>
-          <div
-            className="navbar__dropdown navbar__logout"
-            onClick={handleLogout}
-          >Logout</div>
+            <Link
+              to="/2"
+              className="navbar__dropdown navbar__profile"
+            >Profile</Link>
+            <div
+              className="navbar__dropdown navbar__logout"
+              onClick={handleLogout}
+            >Logout</div>
+          </div>
         </div>
-      </div>
+      )}
     </React.Fragment>
   );
 
