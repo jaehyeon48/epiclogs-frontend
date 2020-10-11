@@ -3,7 +3,9 @@ import {
   LOAD_USER,
   LOAD_USER_FAIL,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  LOGOUT,
+  LOGOUT_FAIL
 } from './actionTypes';
 import SERVER_URL from '../server-url';
 
@@ -39,5 +41,15 @@ export const login = (loginFormData) => async (dispatch) => {
     if (error.response.status === 400) {
       dispatch({ type: LOGIN_FAIL });
     }
+  }
+}
+
+export const logout = () => async (dispatch) => {
+  try {
+    await axios.get(`${SERVER_URL}/auth/logout`, { withCredentials: true });
+    dispatch({ type: LOGOUT });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: LOGOUT_FAIL });
   }
 }

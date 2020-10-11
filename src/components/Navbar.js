@@ -4,8 +4,12 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Logo from '../img/full-logo.png';
 import Avatar from './Avatar';
+import { logout } from '../actions/authAction';
 
-const Navbar = ({ auth }) => {
+const Navbar = ({
+  auth,
+  logout
+}) => {
   let history = useHistory();
   const [searchInput, setSearchInput] = useState('');
 
@@ -19,6 +23,10 @@ const Navbar = ({ auth }) => {
 
   const handleSearchInput = (e) => {
     setSearchInput(e.target.value);
+  }
+
+  const handleLogout = async () => {
+    await logout();
   }
 
   const guestLinks = (
@@ -58,7 +66,10 @@ const Navbar = ({ auth }) => {
             to=""
             className="navbar__dropdown navbar__profile"
           >Profile</Link>
-          <div className="navbar__dropdown navbar__logout">Logout</div>
+          <div
+            className="navbar__dropdown navbar__logout"
+            onClick={handleLogout}
+          >Logout</div>
         </div>
       </div>
     </React.Fragment>
@@ -96,4 +107,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, {
+  logout
+})(Navbar);

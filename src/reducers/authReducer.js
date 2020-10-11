@@ -2,13 +2,15 @@ import {
   LOAD_USER,
   LOAD_USER_FAIL,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  LOGOUT,
+  LOGOUT_FAIL
 } from '../actions/actionTypes'
 
 const initialState = {
   authLoading: true,
   isAuthenticated: false,
-  user: null
+  user: {}
 };
 
 export default function authReducer(state = initialState, action) {
@@ -40,6 +42,13 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: false,
         user: {}
       };
+    case LOGOUT:
+      return {
+        authLoading: false,
+        isAuthenticated: false,
+        user: {}
+      };
+    case LOGOUT_FAIL:
     default:
       return state;
   }
