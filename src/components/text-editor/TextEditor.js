@@ -57,7 +57,7 @@ const TextEditor = () => {
 
     return quill;
 
-    function renderAddLinkContainer(value) {
+    function renderAddLinkContainer() {
       // if the container is already opened, do not render new one
       if (openAddLinkContainer) return;
       // get cursor's current position
@@ -69,7 +69,7 @@ const TextEditor = () => {
   return (
     <React.Fragment>
       <Toolbar />
-      <div id="editor-container" style={{ height: 500 }}>
+      <div id="editor-container">
         {openAddLinkContainer && (
           <AddLink pos={cursorPosition} quill={quillState} closeFunc={handleCloseAddLinkDiv} />
         )}
@@ -77,7 +77,5 @@ const TextEditor = () => {
     </React.Fragment>
   );
 }
-
-
 
 export default TextEditor;
