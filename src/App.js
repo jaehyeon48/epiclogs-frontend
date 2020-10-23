@@ -10,6 +10,7 @@ import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import GoogleCallback from './components/GoogleCallback';
 import Navbar from './components/Navbar';
+import AddPost from './components/post/AddPost';
 
 import { loadUser } from './actions/authAction';
 
@@ -26,6 +27,7 @@ function App() {
         <Switch>
           <PublicRoute path="/login" component={Login} exact />
           <PublicRoute path="/signup" component={SignUp} exact />
+          <Route path="/add-post" component={AddPost} exact />
           <Route path="/oauth2/google-callback" component={GoogleCallback} exact />
         </Switch>
       </Router>
