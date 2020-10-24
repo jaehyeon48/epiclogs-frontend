@@ -1,0 +1,185 @@
+.add-post-container {
+  margin: 5rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1500px;
+
+  & > div {
+    width: 80%;
+  }
+}
+
+.add-post__title-container {
+  margin-bottom: 3rem;
+}
+
+.add-post__title-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 3rem;
+  font-weight: 700;
+  box-sizing: border-box;
+  border: 1px solid $white;
+  border-radius: 0.4rem;
+  outline: none;
+  box-shadow: 0 0 1px 1px $light-gray;
+
+  &:focus {
+    border: 1px solid $indigo;
+    transition: all ease 0.15s;
+  }
+}
+
+.add-post__title-error {
+  display: inline-block;
+  margin: 0.5rem 0 0 0.2rem;
+  color: red;
+  font-size: 1.4rem;
+}
+
+.add-post__tag-container {
+  display: flex;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.add-post__tag-input {
+  width: 100%;
+  font-size: 2rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: 1px solid $white;
+  border-radius: 0.4rem;
+  outline: none;
+  box-shadow: 0 0 1px 1px $light-gray;
+
+  &:focus {
+    border: 1px solid $indigo;
+    transition: all ease 0.15s;
+  }
+
+  &:disabled {
+    background-color: $light-gray;
+    cursor: not-allowed;
+  }
+}
+
+.tag-tooltip {
+  margin-top: 0.3rem;
+  background-color: #495057;
+  color: $white;
+  padding: 1rem;
+  z-index: 99;
+  width: 642px;
+  line-height: 2.5rem;
+  font-size: 1.8rem;
+}
+
+.registered-tags {
+  display: flex;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tag-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1.5rem;
+  margin: 0 1.5rem 1.3rem 0;
+  border: 1px solid $light-gray;
+  font-size: 1.8rem;
+  font-weight: 500;
+  box-shadow: 0 0 0 1px lighten($light-gray, 10%);
+  color: $indigo;
+  border-radius: 1rem;
+  background-color: lighten($light-gray, 16%);
+  cursor: pointer;
+  transition: all ease 0.17s;
+
+  &:hover {
+    box-shadow: 0 0 0 2px $indigo;
+  }
+}
+
+.add-post__privacy-settings {
+  margin: 3rem 0 7rem;
+
+  & > h2 {
+    margin: 1rem 0 2rem;
+  }
+}
+
+.privacy-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.privacy-btn {
+  display: flex;
+  align-items: center;
+  border: 1px solid $white;
+  border-radius: 0.4rem;
+  padding: 1.2rem 3rem;
+  font-size: 1.8rem;
+  background-color: $white;
+  cursor: pointer;
+  box-shadow: 0 0 1px 1px $light-gray;
+
+  & > svg {
+    width: 30px;
+    height: 30px;
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    box-shadow: 0 0 4px 0 $black;
+  }
+}
+
+.add-post__privacy-public {
+  margin-right: 2rem;
+}
+
+.privacy-checked {
+  border: 1px solid $indigo;
+  color: $indigo;
+}
+
+.add-post__publish-btn {
+  background-color: $indigo;
+  color: $white;
+  outline: none;
+  padding: 1.2rem 3rem;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 2rem;
+  box-shadow: 0 0 1px 1px $light-gray;
+  margin-right: 2rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($indigo, 20%);
+    color: darken($white, 15%);
+    transition: all ease 0.15s;
+  }
+}
+
+.add-post__save-btn {
+  background-color: $white;
+  color: $black;
+  outline: none;
+  padding: 1.2rem 3rem;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 2rem;
+  box-shadow: 0 0 1px 1px $light-gray;
+  margin-right: 2rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($white, 20%);
+    transition: all ease 0.15s;
+  }
+}

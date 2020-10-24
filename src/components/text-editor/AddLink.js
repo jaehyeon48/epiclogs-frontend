@@ -33,7 +33,7 @@ const AddLink = ({ pos, quill, closeFunc }) => {
       className="editor-add-link-div add-link-not-close"
       style={{ top: `${pos.top + 32}px`, left: `${pos.left}px` }}>
       <div className="add-link-inputs">
-        <label htmlFor="elti">Text </label>
+        <label htmlFor="elti" className="add-link-not-close">Text </label>
         <input
           type="text"
           id="elti"

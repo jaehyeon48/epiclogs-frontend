@@ -5,7 +5,7 @@ import 'quill/dist/quill.snow.css';
 import Toolbar from './Toolbar';
 import AddLink from './AddLink';
 
-const TextEditor = () => {
+const TextEditor = ({ editorRef }) => {
   const [openAddLinkContainer, setOpenAddLinkContainer] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [quillState, setQuillState] = useState(null);
@@ -28,13 +28,23 @@ const TextEditor = () => {
       return;
     }
     const target = e.target;
+    const nodeName = target.nodeName;
     // for clicking the link icon, add link container-related elements, do not close
-    if (target.className === 'ql-link' ||
-      (target.parentNode && target.parentNode.className === 'ql-link') ||
-      (target.parentNode && target.parentNode.parentNode && target.parentNode.parentNode.className === 'ql-link') ||
-      (target.className.includes('add-link-not-close'))) {
+    // add link container
+    if (target.classList.contains('add-link-not-close')) {
       return;
     }
+    // the link icon
+    else if (nodeName === 'button' && target.className === 'ql-link') {
+      return;
+    }
+    else if (nodeName === 'svg' && target.parentNode.className === 'ql-link') {
+      return;
+    }
+    else if ((nodeName === 'path' || nodeName === 'line') && target.parentNode.parentNode.className === 'ql-link') {
+      return;
+    }
+
     setOpenAddLinkContainer(false);
     document.removeEventListener('click', handleCloseAddLinkDiv);
   }
@@ -69,7 +79,7 @@ const TextEditor = () => {
   return (
     <React.Fragment>
       <Toolbar />
-      <div id="editor-container">
+      <div id="editor-container" ref={editorRef}>
         {openAddLinkContainer && (
           <AddLink pos={cursorPosition} quill={quillState} closeFunc={handleCloseAddLinkDiv} />
         )}
