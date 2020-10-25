@@ -55,6 +55,33 @@
   }
 }
 
+.signup-page__nickname-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 4rem;
+
+  & > label {
+    font-size: 2rem;
+  }
+
+  & > small {
+    font-size: 1.4rem;
+    margin-top: 1rem;
+  }
+}
+
+.signup-page__nickname {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+
+  &:focus ~ label {
+    color: $dark-green;
+    transition: all ease 0.15s;
+  }
+}
+
 .signup-page__email-form {
   display: flex;
   flex-direction: column;

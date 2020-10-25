@@ -3,6 +3,8 @@ import {
   LOAD_USER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAIL,
   LOGOUT,
   LOGOUT_FAIL
 } from '../actions/actionTypes'
@@ -31,12 +33,14 @@ export default function authReducer(state = initialState, action) {
         user: {}
       };
     case LOGIN_SUCCESS:
+    case SIGN_UP_SUCCESS:
       return {
         ...state,
         authLoading: false,
         isAuthenticated: true
       };
     case LOGIN_FAIL:
+    case SIGN_UP_FAIL:
       return {
         ...state,
         authLoading: false,

@@ -1,26 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import isEmail from 'validator/lib/isEmail';
 import isLength from 'validator/lib/isLength';
 
+import SERVER_URL from '../../server-url';
 import { showAlert } from '../../actions/alertAction';
+import { signUp } from '../../actions/authAction';
 
 const SignUp = ({
-  showAlert
+  showAlert,
+  signUp
 }) => {
   const [signUpForm, setSignUpForm] = useState({
     name: '',
+    nickname: '',
     email: '',
     password: ''
   });
   const [isFirstSignUpTry, setIsFirstSignUpTry] = useState(true);
   const [nameError, setNameError] = useState(false);
+  const [nicknameError, setNicknameError] = useState(false);
+  const [nicknameDuplicateError, setNicknameDuplicateError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [pwError, setPwError] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(false);
 
-  const { name, email, password } = signUpForm;
+  const { name, nickname, email, password } = signUpForm;
 
   // validate name
   useEffect(() => {
@@ -31,6 +38,16 @@ const SignUp = ({
       setNameError(true);
     }
   }, [isFirstSignUpTry, name, nameError]);
+
+  // validate nickname
+  useEffect(() => {
+    if (!isFirstSignUpTry && nickname.trim() !== '') {
+      setNicknameError(false);
+    }
+    else if (!isFirstSignUpTry && nickname.trim() === '') {
+      setNicknameError(true);
+    }
+  }, [isFirstSignUpTry, nickname, nicknameError]);
 
   // validate email
   useEffect(() => {
@@ -54,13 +71,13 @@ const SignUp = ({
 
   // handle submit button's disable state
   useEffect(() => {
-    if (!nameError && !emailError && !pwError) {
+    if (!nameError && !nicknameError && !nicknameDuplicateError && !emailError && !pwError) {
       setDisableSubmit(false);
     }
     else {
       setDisableSubmit(true);
     }
-  }, [nameError, emailError, pwError, disableSubmit]);
+  }, [nameError, nicknameError, nicknameDuplicateError, emailError, pwError, disableSubmit]);
 
   const handleChangeLoginForm = (e) => {
     setSignUpForm({
@@ -75,11 +92,16 @@ const SignUp = ({
     if (isFirstSignUpTry) {
       setIsFirstSignUpTry(false);
       const isNameValid = name.trim() !== '';
+      const isNicknameValid = nickname.trim() !== '';
       const isEmailValid = isEmail(email);
       const isPwValid = (password.trim() !== '' && isLength(password, { min: 4 }));
 
       if (!isNameValid) {
         setNameError(true);
+      }
+
+      if (!isNicknameValid) {
+        setNicknameError(true);
       }
 
       if (!isEmailValid) {
@@ -90,22 +112,38 @@ const SignUp = ({
       }
 
       // if name, email and pw are valid, process form
-      if (isNameValid && isEmailValid && isPwValid) {
-        // signUp(signUpForm);
-        console.log(signUpForm);
+      if (isNameValid && isNicknameValid && isEmailValid && isPwValid) {
+        signUp(signUpForm);
       }
       else {
         showAlert('Email or password is invalid.', 'error');
       }
     }
     else {
-      if (!nameError && !emailError && !pwError) {
-        // signUp(signUpForm);
-        console.log(signUpForm);
+      if (!nameError && !nicknameError && !emailError && !pwError) {
+        signUp(signUpForm);
       }
       else {
         showAlert('Email or password is invalid.', 'error');
       }
+    }
+  }
+
+  const checkNicknameDuplication = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const duplicateRes = await axios.post(`${SERVER_URL}/auth/nickname-duplicate`, JSON.stringify({ nickname }), config);
+
+    const code = duplicateRes.data.code;
+
+    if (code === -101) {
+      setNicknameDuplicateError(true);
+    }
+    else {
+      setNicknameDuplicateError(false);
     }
   }
 
@@ -135,6 +173,24 @@ const SignUp = ({
               onChange={handleChangeLoginForm}
             />
             {nameError && (<small style={{ color: 'red' }}>Name is invalid.</small>)}
+          </div>
+          <div className="signup-page__nickname-form">
+            <label
+              htmlFor="login-nickname-input"
+              style={nicknameError || nicknameDuplicateError ? { color: 'red' } : null}
+            >Nickname</label>
+            <input
+              id="login-nickname-input"
+              className="auth-input signup-page__nickname"
+              style={nameError || nicknameDuplicateError ? { borderBottom: '2px solid red' } : null}
+              type="text"
+              name="nickname"
+              value={nickname}
+              onChange={handleChangeLoginForm}
+              onKeyUp={checkNicknameDuplication}
+            />
+            {nicknameError && (<small style={{ color: 'red' }}>Nickname is invalid.</small>)}
+            {!nicknameError && nicknameDuplicateError && (<small style={{ color: 'red' }}>Nickname already exists.</small>)}
           </div>
           <div className="signup-page__email-form">
             <label
@@ -211,5 +267,6 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  showAlert
+  showAlert,
+  signUp
 })(SignUp);

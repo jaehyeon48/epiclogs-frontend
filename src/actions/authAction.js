@@ -4,6 +4,8 @@ import {
   LOAD_USER_FAIL,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAIL,
   LOGOUT,
   LOGOUT_FAIL
 } from './actionTypes';
@@ -41,6 +43,24 @@ export const login = (loginFormData) => async (dispatch) => {
     if (error.response.status === 400) {
       dispatch({ type: LOGIN_FAIL });
     }
+  }
+}
+
+export const signUp = (signUpFormData) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true
+  };
+  const signUpReqBody = JSON.stringify(signUpFormData);
+  try {
+    await axios.post(`${SERVER_URL}/auth/signup`, signUpReqBody, config);
+    dispatch({ type: SIGN_UP_SUCCESS });
+    dispatch(loadUser());
+  } catch (error) {
+    dispatch({ type: SIGN_UP_FAIL });
+    console.error(error)
   }
 }
 
