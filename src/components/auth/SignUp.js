@@ -79,14 +79,14 @@ const SignUp = ({
     }
   }, [nameError, nicknameError, nicknameDuplicateError, emailError, pwError, disableSubmit]);
 
-  const handleChangeLoginForm = (e) => {
+  const handleChangeSignUpForm = (e) => {
     setSignUpForm({
       ...signUpForm,
       [e.target.name]: e.target.value
     });
   }
 
-  const handleSubmitLoginForm = async (e) => {
+  const handleSubmitSignUpForm = async (e) => {
     e.preventDefault();
 
     if (isFirstSignUpTry) {
@@ -156,7 +156,7 @@ const SignUp = ({
       <section className="signup-page__form-section">
         <form
           className="signup-page__auth-form"
-          onSubmit={handleSubmitLoginForm}
+          onSubmit={handleSubmitSignUpForm}
         >
           <div className="signup-page__name-form">
             <label
@@ -170,7 +170,7 @@ const SignUp = ({
               type="text"
               name="name"
               value={name}
-              onChange={handleChangeLoginForm}
+              onChange={handleChangeSignUpForm}
             />
             {nameError && (<small style={{ color: 'red' }}>Name is invalid.</small>)}
           </div>
@@ -186,7 +186,7 @@ const SignUp = ({
               type="text"
               name="nickname"
               value={nickname}
-              onChange={handleChangeLoginForm}
+              onChange={handleChangeSignUpForm}
               onKeyUp={checkNicknameDuplication}
             />
             {nicknameError && (<small style={{ color: 'red' }}>Nickname is invalid.</small>)}
@@ -204,7 +204,7 @@ const SignUp = ({
               type="text"
               name="email"
               value={email}
-              onChange={handleChangeLoginForm}
+              onChange={handleChangeSignUpForm}
             />
             {emailError && (<small style={{ color: 'red' }}>Email is invalid.</small>)}
           </div>
@@ -220,7 +220,7 @@ const SignUp = ({
               type="password"
               name="password"
               value={password}
-              onChange={handleChangeLoginForm}
+              onChange={handleChangeSignUpForm}
             />
             {pwError && (<small style={{ color: 'red' }}>Password is invalid.</small>)}
           </div>
