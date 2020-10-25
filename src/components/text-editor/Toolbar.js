@@ -65,6 +65,7 @@ const Toolbar = () => {
       <span className="ql-formats">
         <button type="button" className="ql-link"></button>
         <button type="button" className="ql-image"></button>
+        <button type="button" className="ql-video"></button>
       </span>
     </div>
   );
