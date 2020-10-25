@@ -7,6 +7,14 @@ const Toolbar = () => {
   return (
     <div id="editor-toolbar-container">
       <span className="ql-formats">
+        <select className="ql-size" defaultValue="normal">
+          <option value="small"></option>
+          <option value="normal"></option>
+          <option value="large"></option>
+          <option value="huge"></option>
+        </select>
+      </span>
+      <span className="ql-formats">
         <button type="button" className="ql-bold"></button>
         <button type="button" className="ql-italic"></button>
         <button type="button" className="ql-underline"></button>
@@ -43,6 +51,7 @@ const Toolbar = () => {
       <span className="ql-formats">
         <button type="button" className="ql-list" value="ordered"></button>
         <button type="button" className="ql-list" value="bullet"></button>
+        <select className="ql-align"></select>
       </span>
       <span className="ql-formats">
         <button type="button" className="ql-script" value="sub"></button>
@@ -53,12 +62,6 @@ const Toolbar = () => {
         <button type="button" className="ql-indent" value="+1"></button>
       </span>
       <ColorPicker />
-      <select className="ql-size" defaultValue="normal">
-        <option value="small"></option>
-        <option value="normal"></option>
-        <option value="large"></option>
-        <option value="huge"></option>
-      </select>
       <span className="ql-formats">
         <button type="button" className="ql-link"></button>
         <button type="button" className="ql-image"></button>
