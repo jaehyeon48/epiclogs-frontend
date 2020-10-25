@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import Quill from 'quill';
+import React from 'react';
 
 import ColorPicker from './ColorPicker';
 

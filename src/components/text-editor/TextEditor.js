@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Quill from 'quill';
+import { } from 'uuid'
 import 'quill/dist/quill.snow.css';
 
 import Toolbar from './Toolbar';
 import AddLink from './AddLink';
+
+import { uploadImageToS3 } from '../../utils/aws-s3';
 
 const TextEditor = ({ editorRef }) => {
   const [openAddLinkContainer, setOpenAddLinkContainer] = useState(false);
@@ -64,6 +67,7 @@ const TextEditor = ({ editorRef }) => {
 
     const toolbar = quill.getModule('toolbar');
     toolbar.addHandler('link', renderAddLinkContainer);
+    toolbar.addHandler('image', testfunc);
 
     return quill;
 
@@ -73,6 +77,27 @@ const TextEditor = ({ editorRef }) => {
       // get cursor's current position
       setCursorPosition(quill.getBounds(quill.getLength()));
       handleOpenAddLinkDiv();
+    }
+
+    function testfunc() {
+      const input = document.createElement('input');
+      input.setAttribute('type', 'file');
+      input.setAttribute('accept', 'image/*');
+      input.click();
+
+      input.onchange = () => {
+        const imageFile = input.files[0]
+        const fileName = imageFile.name;
+        const mimeType = imageFile.type.match(/\b(?!image\b)\w+/)[0];
+
+        const reader = new FileReader();
+        reader.readAsDataURL(imageFile);
+        reader.onload = async (e) => {
+          const imageData = e.target.result.match(/(?!.*,).*$/)[0];
+          const uploadedUrl = await uploadImageToS3(fileName, Buffer.from(imageData, 'base64'));
+          quill.insertEmbed(quill.getSelection().index, 'image', uploadedUrl);
+        }
+      }
     }
   }
 

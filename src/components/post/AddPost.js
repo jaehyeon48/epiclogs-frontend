@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import TextEditor from '../text-editor/TextEditor';
 
-const AddPost = () => {
+import { addPost } from '../../actions/postAction';
+
+const AddPost = ({
+  addPost
+}) => {
   const titleRef = useRef(null);
   const editorRef = useRef(null);
   const [title, setTitle] = useState('');
@@ -80,12 +85,16 @@ const AddPost = () => {
       setTitleError(true);
       return;
     }
-    const textBody = editorRef.current.firstChild.innerHTML;
-    // post(title, tag, textBody, privacy);
+    if (setTitleError) {
+      setTitleError(false);
+    }
+    const postBody = editorRef.current.firstChild.innerHTML;
+    addPost({ title, tag, postBody, privacy });
   }
 
   return (
     <div className="add-post-container">
+      <div className="testtest"></div>
       <div className="add-post__title-container">
         <input
           type="text"
@@ -163,4 +172,4 @@ const AddPost = () => {
   )
 }
 
-export default AddPost;
+export default connect(null, { addPost })(AddPost);

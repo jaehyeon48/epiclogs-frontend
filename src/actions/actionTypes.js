@@ -9,3 +9,7 @@ export const LOGOUT_FAIL = 'LOGOUT_FAIL';
 /* Alert */
 export const SHOW_ALERT = 'SHOW_ALERT';
 export const HIDE_ALERT = 'HIDE_ALERT';
+
+/* Post */
+export const ADD_POST = 'ADD_POST';
+export const ADD_POST_ERROR = 'ADD_POST_ERROR';
