@@ -10,20 +10,13 @@ const s3 = new AWS.S3({
   secretAccessKey: SECRET
 })
 
-export async function uploadImageToS3(fileName, fileData) {
+export async function uploadImageToS3(nickname, fileName, fileData) {
   const params = {
     Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
-    Key: `post-images/${fileName}`,
+    Key: `post-images/${nickname}/${fileName}`,
     ContentEncoding: 'base64',
     Body: fileData
   };
-
-  // s3.upload(params, (err, data) => {
-  //   if (err) throw err;
-
-  //   return new Promise((resolve) => resolve(data.location));
-  //   // console.log('File uploaded successfully to the bucket!');
-  // });
 
   const uploadRes = await s3.upload(params).promise();
   return uploadRes.Location;
