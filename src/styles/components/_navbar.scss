@@ -114,6 +114,11 @@
     background-color: $light-gray;
     transition: all ease 0.15s;
   }
+
+  & a {
+    text-decoration: none;
+    color: inherit;
+  }
 }
 
 .navbar__position-wrapper {
@@ -124,11 +129,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
 
-  & > .navbar__user-name {
-    margin-top: 0.8rem;
-    font-weight: 700;
-  }
+.navbar__user-nickname {
+  display: block;
+  margin-top: 1.1rem;
+  font-weight: 700;
+  font-size: 2.1rem;
+}
+
+.navbar__user-name {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 1.6rem;
+  color: darken($dark-gray, 15%);
 }
 
 .navbar__my-post {

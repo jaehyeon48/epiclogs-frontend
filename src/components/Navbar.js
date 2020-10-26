@@ -79,9 +79,12 @@ const Navbar = ({
               className="navbar__dropdown navbar__profile"
             >
               <Avatar />
-              <div className="navbar__user-name">
+              <span className="navbar__user-nickname">
+                {auth && auth.user.nickname}
+              </span>
+              <span className="navbar__user-name">
                 {auth && auth.user.name}
-              </div>
+              </span>
             </Link>
             <Link
               to="/my-posts"
