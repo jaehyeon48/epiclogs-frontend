@@ -5,6 +5,7 @@ import './App.scss';
 
 import store from './store';
 import PublicRoute from './components/PublicRoute';
+import PrivateRoute from './components/PrivateRoute';
 import Alert from './components/Alert';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
@@ -27,8 +28,8 @@ function App() {
         <Switch>
           <PublicRoute path="/login" component={Login} exact />
           <PublicRoute path="/signup" component={SignUp} exact />
-          <Route path="/add-post" component={AddPost} exact />
-          <Route path="/oauth2/google-callback" component={GoogleCallback} exact />
+          <PrivateRoute path="/add-post" component={AddPost} exact />
+          {/* <Route path="/oauth2/google-callback" component={GoogleCallback} exact /> */}
         </Switch>
       </Router>
     </Provider>
