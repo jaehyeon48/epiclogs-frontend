@@ -24,6 +24,7 @@ const SignUp = ({
   const [nicknameError, setNicknameError] = useState(false);
   const [nicknameDuplicateError, setNicknameDuplicateError] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [emailDuplicateError, setEmailDuplicateError] = useState(false);
   const [pwError, setPwError] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(false);
 
@@ -71,13 +72,15 @@ const SignUp = ({
 
   // handle submit button's disable state
   useEffect(() => {
-    if (!nameError && !nicknameError && !nicknameDuplicateError && !emailError && !pwError) {
+    if (!nameError && !nicknameError && !nicknameDuplicateError
+      && !emailError && !emailDuplicateError && !pwError) {
       setDisableSubmit(false);
     }
     else {
       setDisableSubmit(true);
     }
-  }, [nameError, nicknameError, nicknameDuplicateError, emailError, pwError, disableSubmit]);
+  }, [nameError, nicknameError, nicknameDuplicateError,
+    emailError, emailDuplicateError, pwError, disableSubmit]);
 
   const handleChangeSignUpForm = (e) => {
     setSignUpForm({
@@ -129,6 +132,25 @@ const SignUp = ({
     }
   }
 
+  const checkEmailDuplication = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const duplicateRes = await axios.post(`${SERVER_URL}/auth/email-duplicate`, JSON.stringify({ email }), config);
+
+    const code = duplicateRes.data.code;
+
+    if (code === -100) {
+      setEmailDuplicateError(true);
+    }
+    else {
+      setEmailDuplicateError(false);
+    }
+
+  }
+
   const checkNicknameDuplication = async () => {
     const config = {
       headers: {
@@ -177,12 +199,14 @@ const SignUp = ({
           <div className="signup-page__nickname-form">
             <label
               htmlFor="login-nickname-input"
-              style={nicknameError || nicknameDuplicateError ? { color: 'red' } : null}
+              style={nicknameError || nicknameDuplicateError ?
+                { color: 'red' } : null}
             >Nickname</label>
             <input
               id="login-nickname-input"
               className="auth-input signup-page__nickname"
-              style={nameError || nicknameDuplicateError ? { borderBottom: '2px solid red' } : null}
+              style={nicknameError || nicknameDuplicateError ?
+                { borderBottom: '2px solid red' } : null}
               type="text"
               name="nickname"
               value={nickname}
@@ -190,23 +214,29 @@ const SignUp = ({
               onKeyUp={checkNicknameDuplication}
             />
             {nicknameError && (<small style={{ color: 'red' }}>Nickname is invalid.</small>)}
-            {!nicknameError && nicknameDuplicateError && (<small style={{ color: 'red' }}>Nickname already exists.</small>)}
+            {!nicknameError && nicknameDuplicateError
+              && (<small style={{ color: 'red' }}>Nickname already exists.</small>)}
           </div>
           <div className="signup-page__email-form">
             <label
               htmlFor="login-email-input"
-              style={emailError ? { color: 'red' } : null}
+              style={emailError || emailDuplicateError ?
+                { color: 'red' } : null}
             >Email</label>
             <input
               id="login-email-input"
               className="auth-input signup-page__email"
-              style={emailError ? { borderBottom: '2px solid red' } : null}
+              style={emailError || emailDuplicateError ?
+                { borderBottom: '2px solid red' } : null}
               type="text"
               name="email"
               value={email}
               onChange={handleChangeSignUpForm}
+              onKeyUp={checkEmailDuplication}
             />
             {emailError && (<small style={{ color: 'red' }}>Email is invalid.</small>)}
+            {!emailError && emailDuplicateError
+              && (<small style={{ color: 'red' }}>Email already exists.</small>)}
           </div>
           <div className="signup-page__password-form">
             <label
