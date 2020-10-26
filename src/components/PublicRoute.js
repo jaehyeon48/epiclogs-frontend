@@ -7,7 +7,7 @@ const PublicRoute = ({ component: Component, auth, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if (auth.isAuthenticated) {
+        if (!auth.authLoading && auth.isAuthenticated) {
           return <Redirect to="/" />
         }
         else {
