@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { connect } from 'react-redux';
 import Quill from 'quill';
-import { } from 'uuid'
+import { v4 as uuidv4 } from 'uuid';
 import 'quill/dist/quill.snow.css';
 
 import Toolbar from './Toolbar';
@@ -8,7 +9,8 @@ import AddLink from './AddLink';
 
 import { uploadImageToS3 } from '../../utils/aws-s3';
 
-const TextEditor = ({ editorRef }) => {
+const TextEditor = ({ editorRef, nickname }) => {
+  const nicknameRef = useRef(null);
   const [openAddLinkContainer, setOpenAddLinkContainer] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [quillState, setQuillState] = useState(null);
@@ -67,7 +69,7 @@ const TextEditor = ({ editorRef }) => {
 
     const toolbar = quill.getModule('toolbar');
     toolbar.addHandler('link', renderAddLinkContainer);
-    toolbar.addHandler('image', testfunc);
+    toolbar.addHandler('image', saveImageToS3);
 
     return quill;
 
@@ -79,7 +81,7 @@ const TextEditor = ({ editorRef }) => {
       handleOpenAddLinkDiv();
     }
 
-    function testfunc() {
+    function saveImageToS3() {
       const input = document.createElement('input');
       input.setAttribute('type', 'file');
       input.setAttribute('accept', 'image/*');
@@ -87,14 +89,15 @@ const TextEditor = ({ editorRef }) => {
 
       input.onchange = () => {
         const imageFile = input.files[0]
-        const fileName = imageFile.name;
+        const fileName = uuidv4();
         const mimeType = imageFile.type.match(/\b(?!image\b)\w+/)[0];
 
         const reader = new FileReader();
         reader.readAsDataURL(imageFile);
         reader.onload = async (e) => {
           const imageData = e.target.result.match(/(?!.*,).*$/)[0];
-          const uploadedUrl = await uploadImageToS3(fileName, Buffer.from(imageData, 'base64'));
+          const uploadedUrl = await uploadImageToS3(nicknameRef.current.value,
+            `${fileName}.${mimeType}`, Buffer.from(imageData, 'base64'));
           quill.insertEmbed(quill.getSelection().index, 'image', uploadedUrl);
         }
       }
@@ -109,8 +112,13 @@ const TextEditor = ({ editorRef }) => {
           <AddLink pos={cursorPosition} quill={quillState} closeFunc={handleCloseAddLinkDiv} />
         )}
       </div>
+      <input type="hidden" value={nickname || ''} ref={nicknameRef} />
     </React.Fragment>
   );
 }
 
-export default TextEditor;
+const mapStateToProps = (state) => ({
+  nickname: state.auth.user.nickname
+});
+
+export default connect(mapStateToProps)(TextEditor);
