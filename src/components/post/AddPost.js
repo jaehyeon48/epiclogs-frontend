@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import TextEditor from '../text-editor/TextEditor';
 
 import { addPost } from '../../actions/postAction';
+import { showAlert } from '../../actions/alertAction';
 
 const AddPost = ({
-  addPost
+  addPost,
+  showAlert
 }) => {
+  let history = useHistory();
   const titleRef = useRef(null);
   const editorRef = useRef(null);
   const [title, setTitle] = useState('');
@@ -26,6 +30,12 @@ const AddPost = ({
       setShowTagTooltip(false);
     }
   }, [registeredTags]);
+
+  useEffect(() => {
+    if (titleError && title.trim() !== '') {
+      setTitleError(false);
+    }
+  }, [titleError, title]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -79,22 +89,26 @@ const AddPost = ({
     setPrivacy('private');
   }
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (title.trim() === '') {
       titleRef.current.focus();
       setTitleError(true);
       return;
     }
-    if (setTitleError) {
-      setTitleError(false);
-    }
     const postBody = editorRef.current.firstChild.innerHTML;
-    addPost({ title, tag, postBody, privacy });
+
+    const postRes = await addPost({ title, tag: registeredTags, postBody, privacy });
+    if (postRes === '') {
+      showAlert('Something went wrong. Please try again!', 'fail');
+    }
+    else {
+      history.push(postRes);
+      return;
+    }
   }
 
   return (
     <div className="add-post-container">
-      <div className="testtest"></div>
       <div className="add-post__title-container">
         <input
           type="text"
@@ -172,4 +186,7 @@ const AddPost = ({
   )
 }
 
-export default connect(null, { addPost })(AddPost);
+export default connect(null, {
+  addPost,
+  showAlert
+})(AddPost);
