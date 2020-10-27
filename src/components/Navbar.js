@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -13,6 +13,13 @@ const Navbar = ({
   let history = useHistory();
   const [searchInput, setSearchInput] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [currentPathname, setCurrentPathname] = useState('/');
+
+  useEffect(() => {
+    history.listen((location, action) => {
+      setCurrentPathname(location.pathname);
+    });
+  }, []);
 
   const redirectToHomePage = () => {
     history.push('/');
@@ -96,6 +103,12 @@ const Navbar = ({
             >Logout</div>
           </div>
         </div>
+      )}
+      {currentPathname !== '/add-post' && (
+        <Link
+          to="/add-post"
+          className="navbar__new-post-btn"
+        >NEW POST</Link>
       )}
     </React.Fragment>
   );
