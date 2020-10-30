@@ -9,7 +9,6 @@ import PrivateRoute from './components/PrivateRoute';
 import Alert from './components/Alert';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
-import GoogleCallback from './components/GoogleCallback';
 import Navbar from './components/Navbar';
 import AddPost from './components/post/AddPost';
 
@@ -29,7 +28,6 @@ function App() {
           <PublicRoute path="/login" component={Login} exact />
           <PublicRoute path="/signup" component={SignUp} exact />
           <PrivateRoute path="/add-post" component={AddPost} exact />
-          {/* <Route path="/oauth2/google-callback" component={GoogleCallback} exact /> */}
         </Switch>
       </Router>
     </Provider>
