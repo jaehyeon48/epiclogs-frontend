@@ -1,9 +1,17 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import CryptoJS from 'crypto-js';
+require('dotenv').config();
 
 const OauthNickname = ({ location }) => {
-  // console.log(location.search.match(/(?!.*=).*/));
-  console.log(CryptoJS.AES.decrypt(location.search.match(/(?!.*=).*/)[0]), 'a1mre43gsdfa9ger04gbq10fd9ae9bf9d');
+  if (location.search.length !== 44) {
+    return <Redirect to="/404" />
+  }
+
+  const decryptedUserId = CryptoJS.AES.decrypt(location.search.slice(3), process.env.REACT_APP_AES_SECRET);
+
+  const userId = decryptedUserId.toString(CryptoJS.enc.Utf8);
+
   return (
     <div>
       oauth
