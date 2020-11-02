@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './App.scss';
 
-import axios from 'axios';
-
 import store from './store';
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
@@ -36,19 +34,6 @@ function App() {
       </Router>
     </Provider>
   );
-}
-
-const testfunc = async () => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    withCredentials: true
-  };
-
-  const res = await axios.post('http://localhost:5000/api/auth/test', JSON.stringify({ hello: "world" }), config);
-
-  console.log(res.data);
 }
 
 export default App;
