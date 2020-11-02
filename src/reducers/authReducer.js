@@ -34,6 +34,8 @@ export default function authReducer(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
     case SIGN_UP_SUCCESS:
+      // reload the page cause the password is exposed on browser devtools
+      window.location.reload();
       return {
         ...state,
         authLoading: false,
