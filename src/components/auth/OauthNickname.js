@@ -34,7 +34,7 @@ const OauthNickname = ({
 
     const passedUserId = location.search.slice(3);
     (async () => {
-      const checkingRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/check-google-user`,
+      const checkingRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/check-oauth-user`,
         JSON.stringify({ userId: passedUserId }), config);
 
       if (checkingRes.data.res === -1) {
