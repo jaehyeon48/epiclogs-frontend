@@ -4,7 +4,7 @@ import {
   ADD_POST_ERROR
 } from './actionTypes';
 
-import SERVER_URL from '../server-url';
+require('dotenv').config();
 
 export const addPost = (postData) => async (dispatch) => {
   const config = {
@@ -17,7 +17,7 @@ export const addPost = (postData) => async (dispatch) => {
   const postReqBody = JSON.stringify(postData);
 
   try {
-    const postRes = await axios.post(`${SERVER_URL}/post/add`, postReqBody, config);
+    const postRes = await axios.post(`${process.env.REACT_APP.SERVER_URL}/post/add`, postReqBody, config);
     dispatch({ type: ADD_POST });
     return postRes.data.url;
   } catch (error) {

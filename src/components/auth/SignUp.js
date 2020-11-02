@@ -5,9 +5,10 @@ import axios from 'axios';
 import isEmail from 'validator/lib/isEmail';
 import isLength from 'validator/lib/isLength';
 
-import SERVER_URL from '../../server-url';
 import { showAlert } from '../../actions/alertAction';
 import { signUp } from '../../actions/authAction';
+
+require('dotenv').config();
 
 const SignUp = ({
   showAlert,
@@ -138,7 +139,7 @@ const SignUp = ({
         'Content-Type': 'application/json'
       }
     };
-    const duplicateRes = await axios.post(`${SERVER_URL}/auth/email-duplicate`, JSON.stringify({ email }), config);
+    const duplicateRes = await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/email-duplicate`, JSON.stringify({ email }), config);
 
     const code = duplicateRes.data.code;
 
@@ -157,7 +158,7 @@ const SignUp = ({
         'Content-Type': 'application/json'
       }
     };
-    const duplicateRes = await axios.post(`${SERVER_URL}/auth/nickname-duplicate`, JSON.stringify({ nickname }), config);
+    const duplicateRes = await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/nickname-duplicate`, JSON.stringify({ nickname }), config);
 
     const code = duplicateRes.data.code;
 

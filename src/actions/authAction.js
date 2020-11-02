@@ -9,11 +9,11 @@ import {
   LOGOUT,
   LOGOUT_FAIL
 } from './actionTypes';
-import SERVER_URL from '../server-url';
+require('dotenv').config();
 
 export const loadUser = () => async dispatch => {
   try {
-    const loadUserRes = await axios.get(`${SERVER_URL}/auth/check`, { withCredentials: true });
+    const loadUserRes = await axios.get(`${process.env.REACT_APP.SERVER_URL}/auth/check`, { withCredentials: true });
 
     dispatch({
       type: LOAD_USER,
@@ -36,7 +36,7 @@ export const login = (loginFormData) => async (dispatch) => {
   const loginReqBody = JSON.stringify(loginFormData);
 
   try {
-    await axios.post(`${SERVER_URL}/auth/login/local`, loginReqBody, config);
+    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/login/local`, loginReqBody, config);
     dispatch({ type: LOGIN_SUCCESS });
     dispatch(loadUser());
   } catch (error) {
@@ -55,7 +55,25 @@ export const signUp = (signUpFormData) => async (dispatch) => {
   };
   const signUpReqBody = JSON.stringify(signUpFormData);
   try {
-    await axios.post(`${SERVER_URL}/auth/signup`, signUpReqBody, config);
+    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/signup`, signUpReqBody, config);
+    dispatch({ type: SIGN_UP_SUCCESS });
+    dispatch(loadUser());
+  } catch (error) {
+    dispatch({ type: SIGN_UP_FAIL });
+    console.error(error)
+  }
+}
+
+export const registerNickname = (nickname) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true
+  };
+  const signUpReqBody = JSON.stringify(nickname);
+  try {
+    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/signup`, signUpReqBody, config);
     dispatch({ type: SIGN_UP_SUCCESS });
     dispatch(loadUser());
   } catch (error) {
@@ -66,7 +84,7 @@ export const signUp = (signUpFormData) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`${SERVER_URL}/auth/logout`, { withCredentials: true });
+    await axios.get(`${process.env.REACT_APP.SERVER_URL}/auth/logout`, { withCredentials: true });
     dispatch({ type: LOGOUT });
   } catch (error) {
     console.error(error);
