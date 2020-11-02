@@ -4,7 +4,7 @@ import CryptoJS from 'crypto-js';
 require('dotenv').config();
 
 const OauthNickname = ({ location }) => {
-  if (location.search.length !== 44) {
+  if (location.search.length !== 47) { // including ?q=
     return <Redirect to="/404" />
   }
 
