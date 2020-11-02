@@ -17,7 +17,7 @@ export const addPost = (postData) => async (dispatch) => {
   const postReqBody = JSON.stringify(postData);
 
   try {
-    const postRes = await axios.post(`${process.env.REACT_APP.SERVER_URL}/post/add`, postReqBody, config);
+    const postRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/post/add`, postReqBody, config);
     dispatch({ type: ADD_POST });
     return postRes.data.url;
   } catch (error) {

@@ -13,7 +13,7 @@ require('dotenv').config();
 
 export const loadUser = () => async dispatch => {
   try {
-    const loadUserRes = await axios.get(`${process.env.REACT_APP.SERVER_URL}/auth/check`, { withCredentials: true });
+    const loadUserRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/check`, { withCredentials: true });
 
     dispatch({
       type: LOAD_USER,
@@ -36,7 +36,7 @@ export const login = (loginFormData) => async (dispatch) => {
   const loginReqBody = JSON.stringify(loginFormData);
 
   try {
-    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/login/local`, loginReqBody, config);
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login/local`, loginReqBody, config);
     dispatch({ type: LOGIN_SUCCESS });
     dispatch(loadUser());
   } catch (error) {
@@ -55,7 +55,7 @@ export const signUp = (signUpFormData) => async (dispatch) => {
   };
   const signUpReqBody = JSON.stringify(signUpFormData);
   try {
-    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/signup`, signUpReqBody, config);
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, signUpReqBody, config);
     dispatch({ type: SIGN_UP_SUCCESS });
     dispatch(loadUser());
   } catch (error) {
@@ -73,7 +73,7 @@ export const registerNickname = (userId, nickname) => async (dispatch) => {
   };
   const nicknameBody = JSON.stringify(userId, nickname);
   try {
-    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/register-nickname`, nicknameBody, config);
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/register-nickname`, nicknameBody, config);
     dispatch({ type: SIGN_UP_SUCCESS });
     dispatch(loadUser());
   } catch (error) {
@@ -84,7 +84,7 @@ export const registerNickname = (userId, nickname) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    await axios.get(`${process.env.REACT_APP.SERVER_URL}/auth/logout`, { withCredentials: true });
+    await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/logout`, { withCredentials: true });
     dispatch({ type: LOGOUT });
   } catch (error) {
     console.error(error);
