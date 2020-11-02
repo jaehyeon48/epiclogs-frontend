@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
+
+import { registerNickname } from '../../actions/authAction';
+import { showAlert } from '../../actions/alertAction';
+
 require('dotenv').config();
 
-const OauthNickname = ({ location }) => {
+const OauthNickname = ({
+  location,
+  registerNickname,
+  showAlert
+}) => {
   let history = useHistory();
   const [isFirstSubmit, setIsFirstSubmit] = useState(true);
   const [nickname, setNickname] = useState('');
@@ -12,31 +21,31 @@ const OauthNickname = ({ location }) => {
   const [nicknameDuplicateError, setNicknameDuplicateError] = useState(false);
   const [disableSubmit, setDisableSubmit] = useState(false);
 
-  // useEffect(() => {
-  //   if (location.search.length !== 47) { // including ?q=
-  //     return history.push('/404');
-  //   }
+  useEffect(() => {
+    if (location.search.length !== 47) { // including ?q=
+      return history.push('/404');
+    }
 
-  //   const config = {
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-  //   const passedUserId = location.search.slice(3);
-  //   (async () => {
-  //     const checkingRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/check-google-user`,
-  //       JSON.stringify({ userId: passedUserId }), config);
+    const passedUserId = location.search.slice(3);
+    (async () => {
+      const checkingRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/check-google-user`,
+        JSON.stringify({ userId: passedUserId }), config);
 
-  //     if (checkingRes.data.res === -1) {
-  //       return history.push('/404');
-  //     }
-  //   })();
-  // }, [location.search]);
+      if (checkingRes.data.res === -1) {
+        return history.push('/404');
+      }
+    })();
+  }, [location.search]);
 
-  // const decryptedUserId = CryptoJS.AES.decrypt(location.search.slice(3), process.env.REACT_APP_AES_SECRET);
+  const decryptedUserId = CryptoJS.AES.decrypt(location.search.slice(3), process.env.REACT_APP_AES_SECRET);
 
-  // const userId = decryptedUserId.toString(CryptoJS.enc.Utf8);
+  const userId = decryptedUserId.toString(CryptoJS.enc.Utf8);
 
   useEffect(() => {
     if (!isFirstSubmit && nickname.trim() !== '') {
@@ -71,18 +80,18 @@ const OauthNickname = ({ location }) => {
       }
 
       if (isNicknameValid) {
-        // registerNickname();
+        registerNickname(userId, nickname);
       }
       else {
-        // showAlert('Email or password is invalid.', 'error');
+        showAlert('Nickname is invalid. Try again', 'error');
       }
     }
     else {
       if (isNicknameValid) {
-        // registerNickname();
+        registerNickname(userId, nickname);
       }
       else {
-        // showAlert('Email or password is invalid.', 'error');
+        showAlert('Nickname is invalid. Try again', 'error');
       }
     }
   }
@@ -149,4 +158,7 @@ const OauthNickname = ({ location }) => {
   );
 }
 
-export default OauthNickname;
+export default connect(null, {
+  registerNickname,
+  showAlert
+})(OauthNickname);

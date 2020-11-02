@@ -64,16 +64,16 @@ export const signUp = (signUpFormData) => async (dispatch) => {
   }
 }
 
-export const registerNickname = (nickname) => async (dispatch) => {
+export const registerNickname = (userId, nickname) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
     },
     withCredentials: true
   };
-  const signUpReqBody = JSON.stringify(nickname);
+  const nicknameBody = JSON.stringify(userId, nickname);
   try {
-    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/signup`, signUpReqBody, config);
+    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/signup`, nicknameBody, config);
     dispatch({ type: SIGN_UP_SUCCESS });
     dispatch(loadUser());
   } catch (error) {
