@@ -73,7 +73,7 @@ export const registerNickname = (userId, nickname) => async (dispatch) => {
   };
   const nicknameBody = JSON.stringify(userId, nickname);
   try {
-    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/signup`, nicknameBody, config);
+    await axios.post(`${process.env.REACT_APP.SERVER_URL}/auth/register-nickname`, nicknameBody, config);
     dispatch({ type: SIGN_UP_SUCCESS });
     dispatch(loadUser());
   } catch (error) {
