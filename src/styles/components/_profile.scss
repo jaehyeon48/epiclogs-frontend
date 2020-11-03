@@ -60,3 +60,55 @@
     color: $dark-gray;
   }
 }
+
+.profile__user-info {
+  max-width: 850px;
+  width: 100%;
+  margin: 3rem auto 4rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-infos {
+  margin: 2rem 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & > label {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  & > input {
+    padding: 1rem 1.3rem;
+    font-size: 2rem;
+    font-weight: 500;
+    border: 1px solid darken($dark-gray, 15%);
+    border-radius: 0.4rem;
+  }
+}
+
+#profile__user-email {
+  cursor: not-allowed;
+  background-color: lighten($light-gray, 6%);
+}
+
+.btn-modify-profile {
+  display: block;
+  background: none;
+  border: none;
+  outline: none;
+  color: $indigo;
+  cursor: pointer;
+  width: 70px;
+  margin-top: 0.5rem;
+  margin-left: calc(100% - 70px);
+
+  &:hover {
+    color: $dark-gray;
+  }
+}
