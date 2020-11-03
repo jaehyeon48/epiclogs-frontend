@@ -10,6 +10,7 @@ import {
   uploadAvatar,
   deleteAvatar,
   modifyUsername,
+  modifyPassword,
   modifyUserNickname
 } from '../actions/authAction';
 import { showAlert } from '../actions/alertAction';
@@ -18,6 +19,7 @@ const Profile = ({
   uploadAvatar,
   deleteAvatar,
   modifyUsername,
+  modifyPassword,
   modifyUserNickname,
   showAlert,
   user
@@ -129,8 +131,24 @@ const Profile = ({
     }
   }
 
-  const handleModifyPassword = () => {
-    console.log(userPassword, confirmPw);
+  const handleModifyPassword = async () => {
+    if (userPassword.trim() === '') {
+      return showAlert('Please input password', 'error');
+    }
+    if (userPassword !== confirmPw) {
+      return showAlert('Confirm password does not match', 'error');
+    }
+
+    const modifyRes = await modifyPassword(userPassword);
+
+    if (modifyRes === 0) {
+      showAlert('Successfully updated password.', 'success');
+      setUserPassword('');
+      setConfirmPw('');
+    }
+    else {
+      showAlert('Something went wrong. Please try again.', 'error');
+    }
   }
 
   return (
@@ -239,6 +257,7 @@ export default connect(mapStateToProps, {
   uploadAvatar,
   deleteAvatar,
   modifyUsername,
+  modifyPassword,
   modifyUserNickname,
   showAlert
 })(Profile);

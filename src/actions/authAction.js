@@ -176,3 +176,22 @@ export const modifyUserNickname = (newNickname) => async (dispatch) => {
     return -1;
   }
 }
+
+export const modifyPassword = (newPassword) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    };
+    await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/password`,
+      JSON.stringify({ newPassword }), config);
+    dispatch({ type: MODIFY_PASSWORD });
+    return 0;
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: MODIFY_PASSWORD_FAIL });
+    return -1;
+  }
+}

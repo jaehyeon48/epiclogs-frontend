@@ -97,6 +97,7 @@ export default function authReducer(state = initialState, action) {
           nickname: payload
         }
       };
+    case MODIFY_PASSWORD:
     case LOGOUT_FAIL:
     case UPLOAD_AVATAR_FAIL:
     case DELETE_AVATAR_FAIL:
