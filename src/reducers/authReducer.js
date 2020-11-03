@@ -67,8 +67,17 @@ export default function authReducer(state = initialState, action) {
           avatar: payload
         }
       };
+    case DELETE_AVATAR:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          avatar: ''
+        }
+      };
     case LOGOUT_FAIL:
     case UPLOAD_AVATAR_FAIL:
+    case DELETE_AVATAR_FAIL:
     default:
       return state;
   }

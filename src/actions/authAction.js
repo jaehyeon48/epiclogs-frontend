@@ -116,3 +116,13 @@ export const uploadAvatar = (imageName) => async (dispatch) => {
     dispatch({ type: UPLOAD_AVATAR_FAIL });
   }
 }
+
+export const deleteAvatar = () => async (dispatch) => {
+  try {
+    await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/delete-avatar`, { withCredentials: true });
+    dispatch({ type: DELETE_AVATAR });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: DELETE_AVATAR_FAIL });
+  }
+}

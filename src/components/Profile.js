@@ -5,9 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 import Avatar from './Avatar';
 
 import { uploadAvatarToS3 } from '../utils/aws-s3';
-import { uploadAvatar } from '../actions/authAction';
+import {
+  uploadAvatar,
+  deleteAvatar
+} from '../actions/authAction';
 
-const Profile = ({ uploadAvatar }) => {
+const Profile = ({
+  uploadAvatar,
+  deleteAvatar
+}) => {
   const imageInputRef = useRef(null);
 
   const handleTriggerImageInput = () => {
@@ -29,6 +35,10 @@ const Profile = ({ uploadAvatar }) => {
     }
   }
 
+  const handleDeleteAvatar = () => {
+    deleteAvatar();
+  }
+
   return (
     <div className="profile">
       <div className="profile__avatar-container">
@@ -48,7 +58,11 @@ const Profile = ({ uploadAvatar }) => {
             className="profile__btn-upload-avatar"
             onClick={handleTriggerImageInput}
           >Upload Image</button>
-          <button type="button" className="profile__btn-remove-avatar">Remove Image</button>
+          <button
+            type="button"
+            className="profile__btn-remove-avatar"
+            onClick={handleDeleteAvatar}
+          >Remove Image</button>
         </div>
       </div>
     </div>
@@ -56,5 +70,6 @@ const Profile = ({ uploadAvatar }) => {
 }
 
 export default connect(null, {
-  uploadAvatar
+  uploadAvatar,
+  deleteAvatar
 })(Profile);
