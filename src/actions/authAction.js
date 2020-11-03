@@ -7,7 +7,11 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_UP_FAIL,
   LOGOUT,
-  LOGOUT_FAIL
+  LOGOUT_FAIL,
+  UPLOAD_AVATAR,
+  UPLOAD_AVATAR_FAIL,
+  DELETE_AVATAR,
+  DELETE_AVATAR_FAIL
 } from './actionTypes';
 require('dotenv').config();
 
@@ -89,5 +93,26 @@ export const logout = () => async (dispatch) => {
   } catch (error) {
     console.error(error);
     dispatch({ type: LOGOUT_FAIL });
+  }
+}
+
+export const uploadAvatar = (imageName) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    withCredentials: true
+  };
+
+  try {
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/avatar`,
+      JSON.stringify({ imageName }), config);
+    dispatch({
+      type: UPLOAD_AVATAR,
+      payload: imageName
+    });
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: UPLOAD_AVATAR_FAIL });
   }
 }

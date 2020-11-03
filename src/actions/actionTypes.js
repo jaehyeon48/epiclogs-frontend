@@ -7,6 +7,10 @@ export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAIL = 'SIGN_UP_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const LOGOUT_FAIL = 'LOGOUT_FAIL';
+export const UPLOAD_AVATAR = 'UPLOAD_AVATAR';
+export const UPLOAD_AVATAR_FAIL = 'UPLOAD_AVATAR_FAIL';
+export const DELETE_AVATAR = 'DELETE_AVATAR';
+export const DELETE_AVATAR_FAIL = 'DELETE_AVATAR_FAIL';
 
 /* Alert */
 export const SHOW_ALERT = 'SHOW_ALERT';

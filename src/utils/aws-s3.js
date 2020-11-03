@@ -22,6 +22,18 @@ export async function uploadImageToS3(nickname, fileName, fileData) {
   return uploadRes.Location;
 }
 
+export async function uploadAvatarToS3(fileName, fileData) {
+  const params = {
+    Bucket: process.env.REACT_APP_AWS_BUCKET_NAME,
+    Key: `avatars/${fileName}`,
+    ContentEncoding: 'base64',
+    Body: fileData
+  };
+
+  const uploadRes = await s3.upload(params).promise();
+  return uploadRes.Location;
+}
+
 export function deleteAvatarFromS3(fileName) {
   const params = {
     Bucket: process.env.AWS_BUCKET_NAME,
