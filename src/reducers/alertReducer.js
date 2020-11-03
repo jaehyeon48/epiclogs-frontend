@@ -14,7 +14,8 @@ export default function alertReducer(state = initialState, action) {
 
   switch (type) {
     case SHOW_ALERT:
-      const { alertMessage, alertType } = payload
+      const { alertMessage, alertType } = payload;
+      window.scrollTo(0, 0);
       return {
         ...state,
         isAlertOn: true,
