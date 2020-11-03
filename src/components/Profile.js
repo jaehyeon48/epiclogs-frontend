@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 import Avatar from './Avatar';
 
 import { uploadAvatarToS3 } from '../utils/aws-s3';
 import {
   uploadAvatar,
-  deleteAvatar
+  deleteAvatar,
+  modifyUsername,
+  modifyUserNickname
 } from '../actions/authAction';
+import { showAlert } from '../actions/alertAction';
 
 const Profile = ({
   uploadAvatar,
   deleteAvatar,
+  modifyUsername,
+  modifyUserNickname,
+  showAlert,
   user
 }) => {
   const [userEmail, setUserEmail] = useState('');
@@ -83,6 +90,49 @@ const Profile = ({
     setConfirmPw(e.target.value);
   }
 
+  const handleModifyUserName = async () => {
+    if (userName.trim() === '') {
+      return showAlert('Please input valid name.', 'error');
+    }
+
+    const modifyRes = await modifyUsername(userName);
+    if (modifyRes === 0) {
+      showAlert('Successfully updated name.', 'success');
+    }
+    else {
+      showAlert('Something went wrong. Please try again.', 'error');
+    }
+  }
+
+  const handleModifyNickname = async () => {
+    if (userNickname.trim() === '') {
+      return showAlert('Please input nickname.', 'error');
+    }
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    const duplicateRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/nickname-duplicate`, JSON.stringify({ nickname: userNickname }), config);
+
+    if (duplicateRes.data.code === -101) {
+      return showAlert('Nickname already exists.', 'error');
+    }
+
+    const modifyRes = await modifyUserNickname(userNickname);
+    if (modifyRes === 0) {
+      showAlert('Successfully updated nickname.', 'success');
+    }
+    else {
+      showAlert('Something went wrong. Please try again.', 'error');
+    }
+  }
+
+  const handleModifyPassword = () => {
+    console.log(userPassword, confirmPw);
+  }
+
   return (
     <div className="profile">
       <div className="profile__avatar-container">
@@ -133,6 +183,7 @@ const Profile = ({
           <button
             type="button"
             className="btn-modify-profile btn-modify-user-name"
+            onClick={handleModifyUserName}
           >Modify</button>
         </div>
         <div className="user-infos profile__user-nickname-container">
@@ -147,6 +198,7 @@ const Profile = ({
           <button
             type="button"
             className="btn-modify-profile btn-modify-user-nickname"
+            onClick={handleModifyNickname}
           >Modify</button>
         </div>
         <div className="user-infos profile__user-password-container">
@@ -162,7 +214,7 @@ const Profile = ({
         <div className="user-infos profile__user-confirm-pw-container">
           <label htmlFor="profile__user-confirm-pw">Confirm Password</label>
           <input
-            id="profile__user-password"
+            id="profile__user-confirm-pw"
             type="password"
             name={confirmPw}
             value={confirmPw}
@@ -170,7 +222,8 @@ const Profile = ({
           />
           <button
             type="button"
-            className="btn-modify-profile btn-modify-user-name"
+            className="btn-modify-profile btn-modify-user-pw"
+            onClick={handleModifyPassword}
           >Modify</button>
         </div>
       </div>
@@ -184,5 +237,8 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
   uploadAvatar,
-  deleteAvatar
+  deleteAvatar,
+  modifyUsername,
+  modifyUserNickname,
+  showAlert
 })(Profile);

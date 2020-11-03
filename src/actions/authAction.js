@@ -11,7 +11,13 @@ import {
   UPLOAD_AVATAR,
   UPLOAD_AVATAR_FAIL,
   DELETE_AVATAR,
-  DELETE_AVATAR_FAIL
+  DELETE_AVATAR_FAIL,
+  MODIFY_USER_NAME,
+  MODIFY_USER_NAME_FAIL,
+  MODIFY_USER_NICKNAME,
+  MODIFY_USER_NICKNAME_FAIL,
+  MODIFY_PASSWORD,
+  MODIFY_PASSWORD_FAIL
 } from './actionTypes';
 require('dotenv').config();
 
@@ -105,7 +111,7 @@ export const uploadAvatar = (imageName) => async (dispatch) => {
   };
 
   try {
-    await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/avatar`,
+    await axios.post(`${process.env.REACT_APP_SERVER_URL}/user/avatar`,
       JSON.stringify({ imageName }), config);
     dispatch({
       type: UPLOAD_AVATAR,
@@ -119,10 +125,54 @@ export const uploadAvatar = (imageName) => async (dispatch) => {
 
 export const deleteAvatar = () => async (dispatch) => {
   try {
-    await axios.get(`${process.env.REACT_APP_SERVER_URL}/auth/delete-avatar`, { withCredentials: true });
+    await axios.delete(`${process.env.REACT_APP_SERVER_URL}/user/avatar`, { withCredentials: true });
     dispatch({ type: DELETE_AVATAR });
   } catch (error) {
     console.error(error);
     dispatch({ type: DELETE_AVATAR_FAIL });
+  }
+}
+
+export const modifyUsername = (newUsername) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    };
+    await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/username`,
+      JSON.stringify({ newUsername }), config);
+    dispatch({
+      type: MODIFY_USER_NAME,
+      payload: newUsername
+    });
+    return 0;
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: MODIFY_USER_NAME_FAIL });
+    return -1;
+  }
+}
+
+export const modifyUserNickname = (newNickname) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    };
+    await axios.put(`${process.env.REACT_APP_SERVER_URL}/user/nickname`,
+      JSON.stringify({ newNickname }), config);
+    dispatch({
+      type: MODIFY_USER_NICKNAME,
+      payload: newNickname
+    });
+    return 0;
+  } catch (error) {
+    console.error(error);
+    dispatch({ type: MODIFY_USER_NICKNAME_FAIL });
+    return -1;
   }
 }

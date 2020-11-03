@@ -10,7 +10,13 @@ import {
   UPLOAD_AVATAR,
   UPLOAD_AVATAR_FAIL,
   DELETE_AVATAR,
-  DELETE_AVATAR_FAIL
+  DELETE_AVATAR_FAIL,
+  MODIFY_USER_NAME,
+  MODIFY_USER_NAME_FAIL,
+  MODIFY_USER_NICKNAME,
+  MODIFY_USER_NICKNAME_FAIL,
+  MODIFY_PASSWORD,
+  MODIFY_PASSWORD_FAIL
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -75,9 +81,28 @@ export default function authReducer(state = initialState, action) {
           avatar: ''
         }
       };
+    case MODIFY_USER_NAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          name: payload
+        }
+      };
+    case MODIFY_USER_NICKNAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          nickname: payload
+        }
+      };
     case LOGOUT_FAIL:
     case UPLOAD_AVATAR_FAIL:
     case DELETE_AVATAR_FAIL:
+    case MODIFY_USER_NAME_FAIL:
+    case MODIFY_USER_NICKNAME_FAIL:
+    case MODIFY_PASSWORD_FAIL:
     default:
       return state;
   }
