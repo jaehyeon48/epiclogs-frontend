@@ -24,9 +24,6 @@ const Home = () => {
       {posts.map((post) => (
         <HomePosts key={post.postId} post={post} />
       ))}
-      <div
-        className="post-content-style"
-        dangerouslySetInnerHTML={{ __html: testbody }}></div>
     </div>
   );
 }
