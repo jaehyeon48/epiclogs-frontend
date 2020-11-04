@@ -200,13 +200,18 @@
   background: white;
   border-radius: 4px;
   box-shadow: 1px 2px 4px 2px $light-gray;
-  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+  transition: box-shadow 0.2s ease-in 0s, transform 0.2s ease-in 0s;
   margin: 4rem 3rem;
   padding: 1rem 1rem 1.5rem;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   cursor: pointer;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 1px 2px 4px 2px darken($dark-gray, 10%);
+  }
 }
 
 .home-post__title {
