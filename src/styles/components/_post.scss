@@ -183,3 +183,79 @@
     transition: all ease 0.15s;
   }
 }
+
+/* home posts */
+.home-posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 5rem auto;
+  padding: 0 2rem;
+  max-width: 1640px;
+}
+
+.home-post-item {
+  width: 32rem;
+  height: 11rem;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 1px 2px 4px 2px $light-gray;
+  transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+  margin: 4rem 3rem;
+  padding: 1rem 1rem 1.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.home-post__title {
+  font-size: 2.6rem;
+  font-weight: 700;
+}
+
+.home-post__created-at {
+  margin-top: 3.5rem;
+}
+
+.home-post__nickname {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid $light-gray;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.home-post__by {
+  color: $dark-gray;
+  margin-right: 0.5rem;
+}
+
+.home-post__avatar {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-right: 0.6rem;
+
+  & > img {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin-right: 0.5rem;
+  }
+}
+
+@media only screen and (min-width: 1240px) and (max-width: 1639px) {
+  .home-posts-container {
+    width: 1200px;
+  }
+}
+
+@media only screen and (max-width: 1239px) {
+  .home-posts-container {
+    width: 919px;
+  }
+}

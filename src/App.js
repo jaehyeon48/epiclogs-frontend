@@ -7,6 +7,7 @@ import store from './store';
 import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
 import Alert from './components/Alert';
+import Home from './components/Home/Home';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import Navbar from './components/Navbar';
@@ -27,6 +28,7 @@ function App() {
         <Navbar />
         <Alert />
         <Switch>
+          <Route path="/" component={Home} exact />
           <PublicRoute path="/login" component={Login} exact />
           <PublicRoute path="/signup" component={SignUp} exact />
           <PublicRoute path="/auth/n-name" component={OauthNickname} exact />
