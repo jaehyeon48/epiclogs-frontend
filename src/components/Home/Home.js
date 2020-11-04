@@ -5,7 +5,6 @@ import HomePosts from './HomePosts';
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  const [testbody, settestbody] = useState('');
 
   // load all public posts
   useEffect(() => {
