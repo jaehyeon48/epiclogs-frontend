@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import HomePosts from './HomePosts';
+require('dotenv').config();
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -9,7 +10,7 @@ const Home = () => {
   // load all public posts
   useEffect(() => {
     (async () => {
-      const res = await axios.get('http://localhost:5000/api/post/all');
+      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/post/all`);
       setPosts(res.data);
     })();
   }, []);
