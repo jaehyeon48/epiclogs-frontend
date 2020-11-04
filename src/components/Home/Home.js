@@ -15,10 +15,6 @@ const Home = () => {
     })();
   }, []);
 
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
-
   return (
     <div className="home-posts-container">
       {posts.map((post) => (
