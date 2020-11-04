@@ -99,7 +99,7 @@ const AddPost = ({
 
     const postRes = await addPost({ title, tag: registeredTags, postBody, privacy });
     if (postRes === '') {
-      showAlert('Something went wrong. Please try again!', 'fail');
+      showAlert('Something went wrong. Please try again!', 'error');
     }
     else {
       history.push(postRes);
