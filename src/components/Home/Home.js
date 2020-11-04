@@ -10,7 +10,7 @@ const Home = () => {
   // load all public posts
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/post/all`);
+      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/all`);
       setPosts(res.data);
     })();
   }, []);
