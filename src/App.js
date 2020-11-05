@@ -8,6 +8,7 @@ import PublicRoute from './components/PublicRoute';
 import PrivateRoute from './components/PrivateRoute';
 import Alert from './components/Alert';
 import Home from './components/Home/Home';
+import PostPage from './components/post/PostPage';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import Navbar from './components/Navbar';
@@ -32,6 +33,7 @@ function App() {
           <PublicRoute path="/login" component={Login} exact />
           <PublicRoute path="/signup" component={SignUp} exact />
           <PublicRoute path="/auth/n-name" component={OauthNickname} exact />
+          <Route path="/:nickname/:postId" component={PostPage} exact />
           <PrivateRoute path="/add-post" component={AddPost} exact />
           <PrivateRoute path="/profile" component={Profile} exact />
         </Switch>
