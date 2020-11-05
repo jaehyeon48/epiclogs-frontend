@@ -1,6 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
+import defaultAvatar from '../../img/default_avatar.png';
+
 const HomePosts = ({ post }) => {
   let history = useHistory();
   const handleRedirectToPostPage = () => {
@@ -26,7 +28,9 @@ const HomePosts = ({ post }) => {
       <div className="home-post__nickname">
         <span className="home-post__avatar">
           <img
-            src={`https://epiclogs.tk/avatars/${post.avatar}`}
+            src={post.avatar ?
+              `https://epiclogs.tk/avatars/${post.avatar}` :
+              defaultAvatar}
             alt='user avatar'
           />
         </span>
