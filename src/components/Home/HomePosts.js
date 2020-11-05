@@ -1,8 +1,14 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 const HomePosts = ({ post }) => {
+  let history = useHistory();
+  const handleRedirectToPostPage = () => {
+    history.push(`/${post.nickname}/${post.postId}`);
+  }
+
   return (
-    <div className="home-post-item">
+    <div className="home-post-item" onClick={handleRedirectToPostPage}>
       <div className="home-post__title">
         {post.title}
       </div>
