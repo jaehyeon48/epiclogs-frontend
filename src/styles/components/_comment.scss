@@ -1,0 +1,59 @@
+.post__comment-section-line {
+  background: lighten($light-gray, 7%);
+  width: 768px;
+  height: 1px;
+  margin: 4rem auto;
+}
+
+.post__add-comment-wrapper {
+  width: 768px;
+  margin: 0 auto;
+}
+
+.comment__not-auth {
+  border: 1px solid $light-gray;
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0.7rem;
+}
+
+.comment__not-auth-notice {
+  font-weight: 500;
+  color: darken($dark-gray, 10%);
+  margin-left: 0.5rem;
+}
+
+.comment__login-btn {
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid $indigo;
+  color: $indigo !important;
+  padding: 0.7rem 1.3rem;
+  border-radius: 0.6rem;
+  outline: none;
+  margin-left: 26.2rem;
+  font-weight: 500;
+
+  &:hover {
+    color: lighten($indigo, 20%) !important;
+    border: 1px solid lighten($indigo, 20%);
+  }
+}
+
+.comment__signup-btn {
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid $indigo;
+  color: $white !important;
+  background-color: $indigo;
+  padding: 0.7rem 1.3rem;
+  border-radius: 0.6rem;
+  outline: none;
+  margin-left: 1rem;
+  font-weight: 500;
+
+  &:hover {
+    background-color: lighten($indigo, 10%);
+  }
+}

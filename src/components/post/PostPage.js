@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+import AddComment from './AddComment';
 import defaultAvatar from '../../img/default_avatar.png';
 require('dotenv').config();
 
@@ -66,6 +67,10 @@ const PostPage = () => {
         <div
           className="post-content-style"
           dangerouslySetInnerHTML={{ __html: post.body }}></div>
+      </div>
+      <div className="post__comment-section-line"></div>
+      <div className="post__add-comment-wrapper">
+        <AddComment />
       </div>
     </div>
   );
