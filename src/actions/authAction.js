@@ -63,7 +63,8 @@ export const signUp = (signUpFormData) => async (dispatch) => {
     },
     withCredentials: true
   };
-  const signUpReqBody = JSON.stringify(signUpFormData);
+  const tzOffset = (new Date()).getTimezoneOffset() * 60000;
+  const signUpReqBody = JSON.stringify({ ...signUpFormData, tzOffset });
   try {
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, signUpReqBody, config);
     dispatch({ type: SIGN_UP_SUCCESS });

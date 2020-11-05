@@ -18,7 +18,8 @@ export const addPost = (postData) => async (dispatch) => {
     withCredentials: true
   };
 
-  const postReqBody = JSON.stringify(postData);
+  const tzOffset = (new Date()).getTimezoneOffset() * 60000;
+  const postReqBody = JSON.stringify({ ...postData, tzOffset });
 
   try {
     const postRes = await axios.post(`${process.env.REACT_APP_SERVER_URL}/post/add`, postReqBody, config);
