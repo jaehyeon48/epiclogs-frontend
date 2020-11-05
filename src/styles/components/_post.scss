@@ -196,12 +196,12 @@
 
 .home-post-item {
   width: 32rem;
-  height: 11rem;
+  height: 12rem;
   background: white;
   border-radius: 4px;
   box-shadow: 1px 2px 4px 2px $light-gray;
   transition: box-shadow 0.2s ease-in 0s, transform 0.2s ease-in 0s;
-  margin: 4rem 3rem;
+  margin: 6rem 3rem;
   padding: 1rem 1rem 1.5rem;
   overflow: hidden;
   display: flex;
@@ -250,6 +250,16 @@
     height: 24px;
     display: block;
     margin-right: 0.5rem;
+  }
+}
+
+.home-posts__loading {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  & > img {
+    width: 68px;
   }
 }
 

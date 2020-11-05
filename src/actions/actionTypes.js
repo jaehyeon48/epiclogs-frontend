@@ -25,3 +25,7 @@ export const HIDE_ALERT = 'HIDE_ALERT';
 /* Post */
 export const ADD_POST = 'ADD_POST';
 export const ADD_POST_ERROR = 'ADD_POST_ERROR';
+export const LOAD_PUBLIC_POSTS = 'LOAD_PUBLIC_POSTS';
+export const LOAD_PUBLIC_POSTS_ERROR = 'LOAD_PUBLIC_POSTS_ERROR';
+export const TRIGGER_HOME_LOAD = 'TRIGGER_HOME_LOAD';
+export const REACHED_LAST = 'REACHED_LAST';
