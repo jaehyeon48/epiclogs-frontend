@@ -91,6 +91,7 @@
 }
 
 .navbar__user-dropdown {
+  z-index: 99;
   position: absolute;
   top: 1.5rem;
   right: 0;
