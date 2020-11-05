@@ -12,6 +12,14 @@ const HomePosts = ({ post }) => {
       <div className="home-post__title">
         {post.title}
       </div>
+      <div className="home-post__tags">
+        {post.tags && post.tags.map((tag, i) => (
+          <div key={i}
+            className="home-post__tag-item">
+            {tag}
+          </div>
+        ))}
+      </div>
       <div className="home-post__created-at">
         {post.createdAt.slice(0, 10)}
       </div>
