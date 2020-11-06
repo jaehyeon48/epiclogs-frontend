@@ -35,7 +35,7 @@ export const loadUser = () => async dispatch => {
   }
 }
 
-export const login = (loginFormData) => async (dispatch) => {
+export const login = (loginFormData, history) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -47,7 +47,10 @@ export const login = (loginFormData) => async (dispatch) => {
 
   try {
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/login/local`, loginReqBody, config);
-    dispatch({ type: LOGIN_SUCCESS });
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: history
+    });
     dispatch(loadUser());
   } catch (error) {
     if (error.response.status === 400) {
@@ -56,7 +59,7 @@ export const login = (loginFormData) => async (dispatch) => {
   }
 }
 
-export const signUp = (signUpFormData) => async (dispatch) => {
+export const signUp = (signUpFormData, history) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -67,7 +70,10 @@ export const signUp = (signUpFormData) => async (dispatch) => {
   const signUpReqBody = JSON.stringify({ ...signUpFormData, tzOffset });
   try {
     await axios.post(`${process.env.REACT_APP_SERVER_URL}/auth/signup`, signUpReqBody, config);
-    dispatch({ type: SIGN_UP_SUCCESS });
+    dispatch({
+      type: SIGN_UP_SUCCESS,
+      payload: history
+    });
     dispatch(loadUser());
   } catch (error) {
     dispatch({ type: SIGN_UP_FAIL });

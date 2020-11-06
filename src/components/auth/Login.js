@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import isEmail from 'validator/lib/isEmail';
 import isLength from 'validator/lib/isLength';
 
@@ -14,6 +14,7 @@ const Login = ({
   login,
   showAlert
 }) => {
+  let history = useHistory();
   const [loginForm, setLoginForm] = useState({
     email: '',
     password: ''
@@ -76,7 +77,7 @@ const Login = ({
 
       // if email and pw are valid, process form
       if (isEmailValid && isPwValid) {
-        login(loginForm);
+        login(loginForm, history);
       }
       else {
         showAlert('Email or password is invalid.', 'error');
@@ -84,7 +85,7 @@ const Login = ({
     }
     else {
       if (!emailError && !pwError) {
-        login(loginForm);
+        login(loginForm, history);
       }
       else {
         showAlert('Email or password is invalid.', 'error');

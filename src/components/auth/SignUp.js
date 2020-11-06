@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import isEmail from 'validator/lib/isEmail';
 import isLength from 'validator/lib/isLength';
@@ -14,6 +14,7 @@ const SignUp = ({
   showAlert,
   signUp
 }) => {
+  let history = useHistory();
   const [signUpForm, setSignUpForm] = useState({
     name: '',
     nickname: '',
@@ -117,7 +118,7 @@ const SignUp = ({
 
       // if name, email and pw are valid, process form
       if (isNameValid && isNicknameValid && isEmailValid && isPwValid) {
-        signUp(signUpForm);
+        signUp(signUpForm, history);
       }
       else {
         showAlert('Email or password is invalid.', 'error');
@@ -125,7 +126,7 @@ const SignUp = ({
     }
     else {
       if (!nameError && !nicknameError && !emailError && !pwError) {
-        signUp(signUpForm);
+        signUp(signUpForm, history);
       }
       else {
         showAlert('Email or password is invalid.', 'error');
