@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import AddComment from './AddComment';
+import CommentItem from './CommentItem';
 import defaultAvatar from '../../img/default_avatar.png';
 require('dotenv').config();
 
@@ -29,7 +30,7 @@ const PostPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/${nickname}`);
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/nname/${nickname}`);
         setPublisherAvatar(res.data.avatar);
       } catch (error) {
         console.error(error);
@@ -48,6 +49,23 @@ const PostPage = () => {
       }
     })();
   }, []);
+
+  // get post's comments
+  useEffect(() => {
+    (async () => {
+      const res = await loadPostComments();
+      setComments(res);
+    })();
+  }, []);
+
+  const loadPostComments = async () => {
+    try {
+      const commentRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/comment/post/${postId}`);
+      return commentRes.data.comments;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="post-page">
@@ -84,6 +102,14 @@ const PostPage = () => {
       <div className="post__comment-section-line"></div>
       <div className="post__add-comment-wrapper">
         <AddComment postId={postId} />
+      </div>
+      <div className="post__comments-wrapper">
+        {comments && comments.map((comment) => (
+          <CommentItem
+            key={comment.commentId}
+            comment={comment}
+          />
+        ))}
       </div>
     </div>
   );
