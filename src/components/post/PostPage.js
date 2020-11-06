@@ -16,24 +16,36 @@ const PostPage = () => {
   // get post info (title, body, createdAt)
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`);
-      setPost(res.data);
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`);
+        setPost(res.data);
+      } catch (error) {
+        console.error(error);
+      }
     })();
   }, []);
 
   // get publisher's avatar
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/${nickname}`);
-      setPublisherAvatar(res.data.avatar);
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/${nickname}`);
+        setPublisherAvatar(res.data.avatar);
+      } catch (error) {
+        console.error(error);
+      }
     })();
   }, []);
 
   // get post's tags
   useEffect(() => {
     (async () => {
-      const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/tags/${postId}`);
-      setTags(res.data.tags);
+      try {
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/tags/${postId}`);
+        setTags(res.data.tags);
+      } catch (error) {
+        console.error(error);
+      }
     })();
   }, []);
 
