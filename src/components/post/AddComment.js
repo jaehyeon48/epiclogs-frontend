@@ -23,11 +23,20 @@ const AddComment = ({
     </div>
   );
   const authRender = (
-    <div className="comment__auth"></div>
+    <div className="comment__auth">
+      <textarea
+        className="comment-area"
+        placeholder="Add a comment..."
+      ></textarea>
+      <button
+        type="button"
+        className="add-comment-btn"
+      >Add a comment</button>
+    </div>
   );
   return (
     <React.Fragment>
-      {!auth.authLoading && auth.isAuthenticated ? authRender : guestRender}
+      {auth && auth.authLoading ? null : auth.isAuthenticated ? authRender : guestRender}
     </React.Fragment>
   );
 }

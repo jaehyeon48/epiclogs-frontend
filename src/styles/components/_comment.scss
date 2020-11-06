@@ -57,3 +57,45 @@
     background-color: lighten($indigo, 10%);
   }
 }
+
+.comment__auth {
+  display: flex;
+  width: 768px;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.comment-area {
+  resize: none;
+  padding: 1rem 1rem 1.5rem;
+  outline: none;
+  border: 1px solid $light-gray;
+  margin-bottom: 1.5rem;
+  width: 100%;
+  border-radius: 0.4rem;
+  min-height: 6.125rem;
+  font-size: 1.6rem;
+  color: $black;
+  line-height: 1.75;
+  box-sizing: border-box;
+
+  &:focus {
+    border: 1px solid $indigo;
+    box-shadow: 0 0 0 1px $indigo;
+  }
+}
+
+.add-comment-btn {
+  padding: 0.7rem 1.2rem;
+  background-color: $indigo;
+  color: $white;
+  border: 1px solid $indigo;
+  border-radius: 0.4rem;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lighten($indigo, 6%);
+    transition: all ease 0.15s;
+  }
+}
