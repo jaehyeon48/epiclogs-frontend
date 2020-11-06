@@ -133,10 +133,18 @@
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
+  position: relative;
 }
 
 .comment__user-and-time {
   margin-left: 2rem;
+}
+
+.comment-is-edited {
+  position: absolute;
+  left: 23.6rem;
+  top: 2.95rem;
+  color: darken($dark-gray, 30%);
 }
 
 .comment-username {
@@ -192,4 +200,43 @@
   font-size: 1.8rem;
   word-break: keep-all;
   overflow-wrap: break-word;
+}
+
+.comment-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.cancel-comment-edit {
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: #868e96;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.6rem;
+
+  &:hover {
+    background-color: lighten(#868e96, 12%);
+  }
+}
+
+.edit-comment-btn {
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: $indigo;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.6rem;
+  margin: 0 0.8rem;
+
+  &:hover {
+    background-color: lighten($indigo, 12%);
+  }
 }
