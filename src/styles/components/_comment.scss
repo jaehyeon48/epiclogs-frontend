@@ -157,6 +157,34 @@
   }
 }
 
+.comment-actions {
+  margin-left: 42rem;
+}
+
+.comment__edit-btn {
+  margin-right: 1rem;
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $light-gray;
+  }
+}
+
+.comment__delete-btn {
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  color: $light-red;
+
+  &:hover {
+    color: $dark-red;
+  }
+}
+
 .comment-text {
   line-height: 1.75;
   margin-top: 1.5rem;

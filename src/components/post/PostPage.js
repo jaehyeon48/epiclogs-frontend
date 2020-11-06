@@ -112,6 +112,8 @@ const PostPage = () => {
           <CommentItem
             key={comment.commentId}
             comment={comment}
+            loadPostComments={loadPostComments}
+            setPostComments={setComments}
           />
         ))}
       </div>
