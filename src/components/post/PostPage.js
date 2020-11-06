@@ -101,7 +101,11 @@ const PostPage = () => {
       </div>
       <div className="post__comment-section-line"></div>
       <div className="post__add-comment-wrapper">
-        <AddComment postId={postId} />
+        <AddComment
+          postId={postId}
+          loadPostComments={loadPostComments}
+          setPostComments={setComments}
+        />
       </div>
       <div className="post__comments-wrapper">
         {comments && comments.map((comment) => (

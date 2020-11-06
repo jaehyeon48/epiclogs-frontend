@@ -8,7 +8,9 @@ require('dotenv').config();
 
 const AddComment = ({
   postId,
-  auth
+  auth,
+  loadPostComments,
+  setPostComments
 }) => {
   const [comment, setComment] = useState('');
   const [isEmptyComment, setIsEmptyComment] = useState(false);
@@ -17,15 +19,17 @@ const AddComment = ({
     setComment(e.target.value);
   }
 
-  const submitComment = () => {
+  const submitComment = async () => {
     if (comment.trim() === '') {
       setIsEmptyComment(true);
     }
     else {
-      const addCommentRes = addComment(postId, comment);
+      const addCommentRes = await addComment(postId, comment);
 
       if (addCommentRes === 0) {
-        // loadComment();
+        const res = await loadPostComments();
+        setPostComments(res);
+        setComment('');
       }
       else {
         showAlert('Something went wrong on adding comment.', 'error');
