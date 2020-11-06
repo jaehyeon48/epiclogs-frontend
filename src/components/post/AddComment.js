@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
-import { addComment } from '../../actions/commentAction';
+import { showAlert } from '../../actions/alertAction';
+require('dotenv').config();
 
 const AddComment = ({
   postId,
-  addComment,
   auth
 }) => {
   const [comment, setComment] = useState('');
@@ -21,7 +22,35 @@ const AddComment = ({
       setIsEmptyComment(true);
     }
     else {
-      addComment(postId, comment);
+      const addCommentRes = addComment(postId, comment);
+
+      if (addCommentRes === 0) {
+        // loadComment();
+      }
+      else {
+        showAlert('Something went wrong on adding comment.', 'error');
+      }
+    }
+  }
+
+  const addComment = async (postId, comment) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      withCredentials: true
+    };
+
+    try {
+      const tzOffset = (new Date()).getTimezoneOffset() * 60000;
+      const commentReqBody = JSON.stringify({ postId, comment, tzOffset });
+
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/comment/add`,
+        commentReqBody, config);
+      return 0;
+    } catch (error) {
+      console.error(error);
+      return -1;
     }
   }
 
@@ -77,4 +106,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { addComment })(AddComment);
+export default connect(mapStateToProps)(AddComment);

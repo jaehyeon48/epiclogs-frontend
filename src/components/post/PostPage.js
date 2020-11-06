@@ -11,6 +11,7 @@ const PostPage = () => {
   const [post, setPost] = useState({});
   const [publisherAvatar, setPublisherAvatar] = useState('');
   const [tags, setTags] = useState([]);
+  const [comments, setComments] = useState([]);
 
   // get post info (title, body, createdAt)
   useEffect(() => {
