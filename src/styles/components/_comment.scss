@@ -65,12 +65,16 @@
   align-items: flex-end;
 }
 
+.comment-area-wrapper {
+  width: 100%;
+  height: 105px;
+}
+
 .comment-area {
   resize: none;
   padding: 1rem 1rem 1.5rem;
   outline: none;
   border: 1px solid $light-gray;
-  margin-bottom: 1.5rem;
   width: 100%;
   border-radius: 0.4rem;
   min-height: 6.125rem;
@@ -83,6 +87,16 @@
     border: 1px solid $indigo;
     box-shadow: 0 0 0 1px $indigo;
   }
+}
+
+.empty-comment {
+  border: 1px solid $light-red;
+  box-shadow: 0 0 0 1px $light-red;
+}
+
+.empty-comment-notice {
+  color: $light-red;
+  font-size: 1.4rem;
 }
 
 .add-comment-btn {

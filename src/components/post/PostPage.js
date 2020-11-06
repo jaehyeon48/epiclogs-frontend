@@ -70,7 +70,7 @@ const PostPage = () => {
       </div>
       <div className="post__comment-section-line"></div>
       <div className="post__add-comment-wrapper">
-        <AddComment />
+        <AddComment postId={postId} />
       </div>
     </div>
   );
