@@ -134,9 +134,9 @@ const CommentItem = ({
             {comment.createdAt.replace('T', ' ').slice(0, 19)}
           </div>
         </div>
-        <div className="comment-is-edited">
-          {comment && comment.isEdited === 1 && <span>&#40;edited&#41;</span>}
-        </div>
+        {comment && comment.isEdited === 1 && (
+          <span className="comment__is-edited">&#40;edited&#41;</span>
+        )}
         {auth && !auth.loading &&
           auth.user.userId === comment.userId && !isOpenCommentEditor && (
             <div className="comment-actions">
