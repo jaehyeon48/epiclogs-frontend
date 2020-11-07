@@ -13,6 +13,8 @@ const initialState = {
   reachedLast: false
 };
 
+const postIdHashTable = {};
+
 export default function postReducer(state = initialState, action) {
   const { type, payload } = action;
 
@@ -30,10 +32,7 @@ export default function postReducer(state = initialState, action) {
     case LOAD_PUBLIC_POSTS:
       return {
         ...state,
-        publicPosts: [
-          ...state.publicPosts,
-          ...payload
-        ],
+        publicPosts: removeDuplicatePost(state.publicPosts, payload),
         homePostLoading: false
       };
     case LOAD_PUBLIC_POSTS_ERROR:
@@ -46,4 +45,17 @@ export default function postReducer(state = initialState, action) {
     default:
       return state;
   }
+}
+
+const removeDuplicatePost = (prevPosts, newPosts) => {
+  const result = [...prevPosts];
+
+  for (const newPost of newPosts) {
+    if (!postIdHashTable[newPost.postId]) { // if the postId already exists, skip
+      postIdHashTable[newPost.postId] = true;
+      result.push(newPost);
+    }
+  };
+
+  return result;
 }
