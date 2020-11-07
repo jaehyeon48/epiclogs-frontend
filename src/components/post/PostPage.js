@@ -16,6 +16,7 @@ const PostPage = ({ auth }) => {
   const [publisherAvatar, setPublisherAvatar] = useState('');
   const [tags, setTags] = useState([]);
   const [comments, setComments] = useState([]);
+  const [isEdited, setIsEdited] = useState(false);
 
   // get post info (title, body, createdAt)
   useEffect(() => {
@@ -72,6 +73,12 @@ const PostPage = ({ auth }) => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (post && post.isEdited) {
+      setIsEdited(true);
+    }
+  }, [post]);
+
   const loadPostComments = async () => {
     try {
       const commentRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/comment/post/${postId}`,
@@ -118,6 +125,7 @@ const PostPage = ({ auth }) => {
           <div className="post__posted-time">
             {post.createdAt && post.createdAt.replace('T', ' ').slice(0, 19)}
           </div>
+          {isEdited && <span className="post__is-edited">&#40;edited&#41;</span>}
           {auth && !auth.loading && auth.user.nickname === nickname && (
             <div className="post__edit-actions">
               <button

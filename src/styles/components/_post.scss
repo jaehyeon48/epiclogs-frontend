@@ -328,6 +328,13 @@
 .post__info-wrapper {
   display: flex;
   align-items: center;
+  position: relative;
+}
+
+.post__is-edited {
+  position: absolute;
+  left: 29.6rem;
+  color: darken($dark-gray, 30%);
 }
 
 .post__edit-actions {
