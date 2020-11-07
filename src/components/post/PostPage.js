@@ -108,6 +108,13 @@ const PostPage = ({ auth }) => {
     }
   }
 
+  useEffect(() => {
+    if (post.privacy === 'private' && auth && !auth.authLoading &&
+      (!auth.isAuthenticated || (auth.user.nickname && auth.user.nickname !== nickname))) {
+      history.push('/');
+    }
+  }, [auth, post]);
+
   return (
     <div className="post-page">
       <div className="post__header-wrapper">
