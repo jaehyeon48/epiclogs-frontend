@@ -330,6 +330,33 @@
   align-items: center;
 }
 
+.post__edit-actions {
+  margin-left: 35rem;
+}
+
+.post__edit-btn {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+
+  &:hover {
+    color: $light-gray;
+  }
+}
+
+.post__delete-btn {
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  color: $light-red;
+
+  &:hover {
+    color: $dark-red;
+  }
+}
+
 .post__info-separator {
   margin: 0 1rem;
 }

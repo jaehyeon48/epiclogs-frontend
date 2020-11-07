@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import AddComment from './AddComment';
@@ -7,7 +8,8 @@ import CommentItem from './CommentItem';
 import defaultAvatar from '../../img/default_avatar.png';
 require('dotenv').config();
 
-const PostPage = () => {
+const PostPage = ({ auth }) => {
+  let history = useHistory();
   const { nickname, postId } = useParams();
   const [post, setPost] = useState({});
   const [publisherAvatar, setPublisherAvatar] = useState('');
@@ -67,6 +69,18 @@ const PostPage = () => {
     }
   }
 
+  const deletePost = async () => {
+    if (window.confirm('Do you really want to delete the post?')) {
+      try {
+        await axios.delete(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`, { withCredentials: true });
+        history.push('/');
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  }
+
   return (
     <div className="post-page">
       <div className="post__header-wrapper">
@@ -84,6 +98,19 @@ const PostPage = () => {
           <div className="post__posted-time">
             {post.createdAt && post.createdAt.replace('T', ' ').slice(0, 19)}
           </div>
+          {auth && !auth.loading && auth.user.nickname === nickname && (
+            <div className="post__edit-actions">
+              <button
+                type="button"
+                className="post__edit-btn"
+              >Edit</button>
+              <button
+                type="button"
+                className="post__delete-btn"
+                onClick={deletePost}
+              >Delete</button>
+            </div>
+          )}
         </div>
         <div className="post__tags">
           {tags.map((tag, i) => (
@@ -121,4 +148,8 @@ const PostPage = () => {
   );
 }
 
-export default PostPage;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(PostPage);
