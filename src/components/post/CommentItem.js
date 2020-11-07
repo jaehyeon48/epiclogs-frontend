@@ -10,6 +10,7 @@ const CommentItem = ({
   loadPostComments,
   setPostComments
 }) => {
+  const signal = axios.CancelToken.source();
   const [commenterAvatar, setCommenterAvatar] = useState('');
   const [userNickname, setUserNickname] = useState('');
   const [editCommentText, setEditCommentText] = useState('');
@@ -28,26 +29,34 @@ const CommentItem = ({
     if (comment && comment.userId) {
       (async () => {
         try {
-          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/id/${comment.userId}`);
+          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/id/${comment.userId}`, { cancelToken: signal.token });
           setCommenterAvatar(res.data.avatar);
         } catch (error) {
-          console.error(error);
+          if (axios.isCancel(error)) { }
+          else {
+            console.log(error);
+          }
         }
       })();
     }
+    return () => { signal.cancel(); }
   }, [comment]);
 
   useEffect(() => {
     if (comment && comment.userId) {
       (async () => {
         try {
-          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/nickname/${comment.userId}`);
+          const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/nickname/${comment.userId}`, { cancelToken: signal.token });
           setUserNickname(res.data.nickname);
         } catch (error) {
-          console.error(error);
+          if (axios.isCancel(error)) { }
+          else {
+            console.log(error);
+          }
         }
       })();
     }
+    return () => { signal.cancel(); }
   }, [comment]);
 
   useEffect(() => {

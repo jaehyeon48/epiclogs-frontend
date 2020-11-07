@@ -9,6 +9,7 @@ import defaultAvatar from '../../img/default_avatar.png';
 require('dotenv').config();
 
 const PostPage = ({ auth }) => {
+  const signal = axios.CancelToken.source();
   let history = useHistory();
   const { nickname, postId } = useParams();
   const [post, setPost] = useState({});
@@ -20,10 +21,14 @@ const PostPage = ({ auth }) => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`);
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`,
+          { cancelToken: signal.token });
         setPost(res.data);
       } catch (error) {
-        console.error(error);
+        if (axios.isCancel(error)) { }
+        else {
+          console.log(error);
+        }
       }
     })();
   }, []);
@@ -32,10 +37,13 @@ const PostPage = ({ auth }) => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/nname/${nickname}`);
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/nname/${nickname}`, { cancelToken: signal.token });
         setPublisherAvatar(res.data.avatar);
       } catch (error) {
-        console.error(error);
+        if (axios.isCancel(error)) { }
+        else {
+          console.log(error);
+        }
       }
     })();
   }, []);
@@ -44,10 +52,14 @@ const PostPage = ({ auth }) => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/tags/${postId}`);
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/tags/${postId}`,
+          { cancelToken: signal.token });
         setTags(res.data.tags);
       } catch (error) {
-        console.error(error);
+        if (axios.isCancel(error)) { }
+        else {
+          console.log(error);
+        }
       }
     })();
   }, []);
@@ -62,10 +74,14 @@ const PostPage = ({ auth }) => {
 
   const loadPostComments = async () => {
     try {
-      const commentRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/comment/post/${postId}`);
+      const commentRes = await axios.get(`${process.env.REACT_APP_SERVER_URL}/comment/post/${postId}`,
+        { cancelToken: signal.token });
       return commentRes.data.comments;
     } catch (error) {
-      console.error(error);
+      if (axios.isCancel(error)) { }
+      else {
+        console.log(error);
+      }
     }
   }
 
