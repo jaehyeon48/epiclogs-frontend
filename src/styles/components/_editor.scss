@@ -121,3 +121,10 @@ button.ql-active {
     border: 1px solid $dark-gray;
   }
 }
+
+.ql-editor .ql-video {
+  width: 60vw;
+  height: 54vh;
+  max-width: 1000px !important;
+  max-height: 500px;
+}
