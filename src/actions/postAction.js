@@ -2,6 +2,8 @@ import axios from 'axios';
 import {
   ADD_POST,
   ADD_POST_ERROR,
+  EDIT_POST,
+  EDIT_POST_ERROR,
   LOAD_PUBLIC_POSTS,
   LOAD_PUBLIC_POSTS_ERROR,
   TRIGGER_HOME_LOAD,
@@ -29,6 +31,14 @@ export const addPost = (postData) => async (dispatch) => {
     dispatch({ type: ADD_POST_ERROR });
     return '';
   }
+}
+
+export const editPost = () => (dispatch) => {
+  dispatch({ type: EDIT_POST });
+}
+
+export const editPostError = () => (dispatch) => {
+  dispatch({ type: EDIT_POST_ERROR });
 }
 
 export const loadPublicPosts = (startRange) => async (dispatch) => {

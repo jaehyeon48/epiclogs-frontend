@@ -3,12 +3,20 @@ import axios from 'axios';
 import { useParams, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import {
+  editPost,
+  editPostError
+} from '../../actions/postAction';
 import { showAlert } from '../../actions/alertAction';
 
 import TextEditor from '../text-editor/TextEditor';
 require('dotenv').config();
 
-const EditPost = ({ auth }) => {
+const EditPost = ({
+  auth,
+  editPost,
+  editPostError
+}) => {
   let history = useHistory();
   const signal = axios.CancelToken.source();
   const { nickname, postId } = useParams();
@@ -166,11 +174,13 @@ const EditPost = ({ auth }) => {
         showAlert('Something went wrong. Please try again!', 'error');
       }
       else {
+        editPost();
         return history.push(editPostRes.data.url);
       }
     } catch (error) {
       if (axios.isCancel(error)) { }
       else {
+        editPostError();
         console.log(error);
       }
     }
@@ -264,4 +274,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(EditPost);
+export default connect(mapStateToProps, {
+  editPost,
+  editPostError
+})(EditPost);

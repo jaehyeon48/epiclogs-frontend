@@ -1,6 +1,8 @@
 import {
   ADD_POST,
   ADD_POST_ERROR,
+  EDIT_POST,
+  EDIT_POST_ERROR,
   LOAD_PUBLIC_POSTS,
   LOAD_PUBLIC_POSTS_ERROR,
   TRIGGER_HOME_LOAD,
@@ -10,7 +12,8 @@ import {
 const initialState = {
   publicPosts: [],
   homePostLoading: true,
-  reachedLast: false
+  reachedLast: false,
+  shouldReloadHome: false
 };
 
 const postIdHashTable = {};
@@ -33,7 +36,8 @@ export default function postReducer(state = initialState, action) {
       return {
         ...state,
         publicPosts: removeDuplicatePost(state.publicPosts, payload),
-        homePostLoading: false
+        homePostLoading: false,
+        shouldReloadHome: false
       };
     case LOAD_PUBLIC_POSTS_ERROR:
       return {
@@ -41,7 +45,14 @@ export default function postReducer(state = initialState, action) {
         homePostLoading: false
       };
     case ADD_POST:
+    case EDIT_POST:
+      return {
+        ...state,
+        homePostLoading: true,
+        shouldReloadHome: true
+      }
     case ADD_POST_ERROR:
+    case EDIT_POST_ERROR:
     default:
       return state;
   }

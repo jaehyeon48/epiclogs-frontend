@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import HomePosts from './HomePosts';
@@ -14,19 +15,30 @@ const Home = ({
   triggerLoadHomePost,
   publicPosts,
   homePostLoading,
-  reachedLast
+  reachedLast,
+  shouldReloadHome
 }) => {
+  let history = useHistory();
   const [postRange, setPostRange] = useState(publicPosts.length);
   const lastRange = useRef(postRange);
   const didReachedLast = useRef(reachedLast);
 
+  // reload posts when added or edited a post
+  useEffect(() => {
+    if (shouldReloadHome) {
+      window.location.reload();
+    }
+  }, [shouldReloadHome]);
+
   // load all public posts
   useEffect(() => {
-    loadPublicPosts(lastRange.current);
-    setPostRange(prevRange => {
-      lastRange.current = prevRange + 12;
-      return prevRange + 12;
-    });
+    if (postRange === 0) {
+      loadPublicPosts(lastRange.current);
+      setPostRange(prevRange => {
+        lastRange.current = prevRange + 12;
+        return prevRange + 12;
+      });
+    }
   }, []);
 
   // infinite scroll
@@ -71,7 +83,8 @@ const Home = ({
 const mapStateToProps = (state) => ({
   publicPosts: state.post.publicPosts,
   homePostLoading: state.post.homePostLoading,
-  reachedLast: state.post.reachedLast
+  reachedLast: state.post.reachedLast,
+  shouldReloadHome: state.post.shouldReloadHome
 })
 
 export default connect(mapStateToProps, {
