@@ -56,6 +56,5 @@ const removeDuplicatePost = (prevPosts, newPosts) => {
       result.push(newPost);
     }
   };
-
   return result;
 }

@@ -9,7 +9,7 @@ import AddLink from './AddLink';
 
 import { uploadImageToS3 } from '../../utils/aws-s3';
 
-const TextEditor = ({ editorRef, nickname }) => {
+const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
   const nicknameRef = useRef(null);
   const [openAddLinkContainer, setOpenAddLinkContainer] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
@@ -19,6 +19,12 @@ const TextEditor = ({ editorRef, nickname }) => {
     const initiatedQuill = initiateQuill();
     setQuillState(initiatedQuill);
   }, []);
+
+  useEffect(() => {
+    if (editPostText) {
+      editorRef.current.firstChild.innerHTML = editPostText;
+    }
+  }, [editPostText]);
 
   const handleOpenAddLinkDiv = () => {
     setOpenAddLinkContainer(true);

@@ -13,6 +13,7 @@ import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
 import Navbar from './components/Navbar';
 import AddPost from './components/post/AddPost';
+import EditPost from './components/post/EditPost';
 import OauthNickname from './components/auth/OauthNickname';
 import Profile from './components/Profile';
 
@@ -35,6 +36,7 @@ function App() {
           <PublicRoute path="/auth/n-name" component={OauthNickname} exact />
           <Route path="/:nickname/:postId" component={PostPage} exact />
           <PrivateRoute path="/add-post" component={AddPost} exact />
+          <PrivateRoute path="/:nickname/:postId/edit" component={EditPost} exact />
           <PrivateRoute path="/profile" component={Profile} exact />
         </Switch>
       </Router>

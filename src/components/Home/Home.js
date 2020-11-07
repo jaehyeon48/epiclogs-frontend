@@ -19,6 +19,7 @@ const Home = ({
   const [postRange, setPostRange] = useState(publicPosts.length);
   const lastRange = useRef(postRange);
   const didReachedLast = useRef(reachedLast);
+
   // load all public posts
   useEffect(() => {
     loadPublicPosts(lastRange.current);

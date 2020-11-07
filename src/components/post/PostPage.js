@@ -85,6 +85,10 @@ const PostPage = ({ auth }) => {
     }
   }
 
+  const redirectToEditPostPage = () => {
+    history.push(`/${nickname}/${postId}/edit`);
+  }
+
   const deletePost = async () => {
     if (window.confirm('Do you really want to delete the post?')) {
       try {
@@ -119,6 +123,7 @@ const PostPage = ({ auth }) => {
               <button
                 type="button"
                 className="post__edit-btn"
+                onClick={redirectToEditPostPage}
               >Edit</button>
               <button
                 type="button"
