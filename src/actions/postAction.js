@@ -7,7 +7,11 @@ import {
   LOAD_PUBLIC_POSTS,
   LOAD_PUBLIC_POSTS_ERROR,
   TRIGGER_HOME_LOAD,
-  REACHED_LAST
+  TRIGGER_MYPOST_LOAD,
+  HOME_REACHED_LAST,
+  MYPOST_REACHED_LAST,
+  LOAD_MY_POSTS_ERROR,
+  LOAD_MY_POSTS
 } from './actionTypes';
 
 require('dotenv').config();
@@ -45,7 +49,7 @@ export const loadPublicPosts = (startRange) => async (dispatch) => {
   try {
     const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/all/${startRange}`);
     if (res.data.didReachedLast) {
-      dispatch({ type: REACHED_LAST });
+      dispatch({ type: HOME_REACHED_LAST });
     }
     dispatch({
       type: LOAD_PUBLIC_POSTS,
@@ -58,4 +62,24 @@ export const loadPublicPosts = (startRange) => async (dispatch) => {
 
 export const triggerLoadHomePost = () => (dispatch) => {
   dispatch({ type: TRIGGER_HOME_LOAD });
+}
+
+export const triggerLoadMyPost = () => (dispatch) => {
+  dispatch({ type: TRIGGER_MYPOST_LOAD });
+}
+
+export const loadMyPosts = (startRange) => async (dispatch) => {
+  try {
+    const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/user/${startRange}`,
+      { withCredentials: true });
+    if (res.data.didReachedLast) {
+      dispatch({ type: MYPOST_REACHED_LAST });
+    }
+    dispatch({
+      type: LOAD_MY_POSTS,
+      payload: res.data.post
+    });
+  } catch (error) {
+    dispatch({ type: LOAD_MY_POSTS_ERROR });
+  }
 }

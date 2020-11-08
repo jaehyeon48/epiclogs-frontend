@@ -185,7 +185,8 @@
 }
 
 /* home posts */
-.home-posts-container {
+.home-posts-container,
+.mypost-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -194,7 +195,8 @@
   max-width: 1640px;
 }
 
-.home-post-item {
+.home-post-item,
+.mypost-item {
   position: relative;
   width: 32rem;
   height: 19rem;
@@ -224,7 +226,8 @@
   line-height: 1.5;
 }
 
-.home-post__tags {
+.home-post__tags,
+.mypost-tags {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -234,7 +237,8 @@
   overflow: hidden;
 }
 
-.home-post__tag-item {
+.home-post__tag-item,
+.mypost__tag-item {
   font-size: 1.4rem;
   border: 1px solid $indigo;
   margin: 0.6rem 0.7rem 0 0;
@@ -283,7 +287,8 @@
   }
 }
 
-.home-posts__loading {
+.home-posts__loading,
+.mypost__loading {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -414,4 +419,25 @@
 .post__content-wrapper {
   width: 768px;
   margin: 5.5rem auto 0;
+}
+
+.mypost-wrapper {
+  width: 768px;
+  margin: 5rem auto 0;
+}
+
+.mypost-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.mypost-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+
+  & > img {
+    width: 68px;
+  }
 }

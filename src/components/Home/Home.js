@@ -15,13 +15,13 @@ const Home = ({
   triggerLoadHomePost,
   publicPosts,
   homePostLoading,
-  reachedLast,
+  homeReachedLast,
   shouldReloadHome
 }) => {
   let history = useHistory();
   const [postRange, setPostRange] = useState(publicPosts.length);
   const lastRange = useRef(postRange);
-  const didReachedLast = useRef(reachedLast);
+  const didReachedLast = useRef(homeReachedLast);
 
   // reload posts when added or edited a post
   useEffect(() => {
@@ -63,8 +63,8 @@ const Home = ({
   }
 
   useEffect(() => {
-    didReachedLast.current = reachedLast;
-  }, [reachedLast]);
+    didReachedLast.current = homeReachedLast;
+  }, [homeReachedLast]);
 
   return (
     <div className="home-posts-container">
@@ -83,7 +83,7 @@ const Home = ({
 const mapStateToProps = (state) => ({
   publicPosts: state.post.publicPosts,
   homePostLoading: state.post.homePostLoading,
-  reachedLast: state.post.reachedLast,
+  homeReachedLast: state.post.homeReachedLast,
   shouldReloadHome: state.post.shouldReloadHome
 })
 
