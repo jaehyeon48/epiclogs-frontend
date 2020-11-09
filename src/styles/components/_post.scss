@@ -392,7 +392,7 @@
 
 .post__tags {
   display: flex;
-  margin: 2rem 0;
+  margin: 2rem 0 0;
 }
 
 .post__tag-item {
@@ -414,6 +414,13 @@
   &:hover {
     box-shadow: 0 0 0 2px $indigo;
   }
+}
+
+.post__section-divider {
+  background: lighten($light-gray, 7%);
+  width: 768px;
+  height: 1px;
+  margin: 4rem auto;
 }
 
 .post__content-wrapper {

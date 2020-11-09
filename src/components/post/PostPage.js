@@ -157,12 +157,13 @@ const PostPage = ({ auth }) => {
           ))}
         </div>
       </div>
+      <div className="post__section-divider"></div>
       <div className="post__content-wrapper">
         <div
           className="post-content-style"
           dangerouslySetInnerHTML={{ __html: post.body }}></div>
       </div>
-      <div className="post__comment-section-line"></div>
+      <div className="post__section-divider"></div>
       <div className="post__add-comment-wrapper">
         <AddComment
           postId={postId}
