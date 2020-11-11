@@ -413,4 +413,28 @@
   & img {
     max-width: 100%;
   }
+
+  & .ql-figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    clear: both;
+    outline: none;
+  }
+
+  & .ql-image-wrapper {
+    position: relative;
+    margin: 0 auto;
+    width: fit-content;
+    box-shadow: 0px 0px 1px 1px $light-gray;
+  }
+
+  & .ql-figcaption {
+    color: #7e7e7e;
+    text-align: center;
+    font-size: 1.6rem;
+    margin-top: 0.2rem;
+    cursor: auto;
+  }
 }

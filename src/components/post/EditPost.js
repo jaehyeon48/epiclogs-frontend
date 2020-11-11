@@ -25,6 +25,7 @@ const EditPost = ({
   const [title, setTitle] = useState('');
   const [titleError, setTitleError] = useState(false);
   const [post, setPost] = useState({});
+  const [isPostSet, setIsPostSet] = useState(false);
   const [tag, setTag] = useState('');
   const [registeredTags, setRegisteredTags] = useState([]);
   const [tagElements, setTagElements] = useState('');
@@ -38,6 +39,7 @@ const EditPost = ({
         const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/post/${postId}`,
           { cancelToken: signal.token });
         setPost(res.data);
+        setIsPostSet(true);
       } catch (error) {
         if (axios.isCancel(error)) { }
         else {
@@ -96,6 +98,131 @@ const EditPost = ({
       setTitleError(false);
     }
   }, [titleError, title]);
+
+  useEffect(() => {
+
+    // get caption text from user
+    const captionInputWrapper = document.createElement('div');
+    const captionInput = document.createElement('input');
+    const captionApplyBtn = document.createElement('button');
+    const cancelCaption = document.createElement('div');
+    captionInputWrapper.className = 'caption-input-wrapper';
+    captionInput.setAttribute('type', 'text');
+    captionInput.className = 'ql-caption-input';
+
+    captionApplyBtn.setAttribute('type', 'button');
+    captionApplyBtn.className = 'caption-apply-btn';
+    captionApplyBtn.innerText = 'Apply';
+
+    cancelCaption.innerHTML = 'X';
+    cancelCaption.className = 'cancel-caption';
+
+    captionInputWrapper.appendChild(captionInput);
+    captionInputWrapper.appendChild(captionApplyBtn);
+    captionInputWrapper.appendChild(cancelCaption);
+    captionInput.addEventListener('blur', (e) => {
+      // re-focus cause it loses focus automatically at first
+      setTimeout(() => {
+        e.target.focus();
+      }, 0);
+    });
+    cancelCaption.addEventListener('click', (e) => {
+      const target = e.target;
+      // remove caption input's value
+      target.previousSibling.previousSibling.value = '';
+      // close caption input wrapper
+      target.parentNode.parentNode.removeChild(target.parentNode);
+    });
+
+    // when user clicks 'apply' button on caption input wrapper, add the 
+    // caption onto the image
+    const applyCaption = (e) => {
+      if (!e.target.classList.contains('caption-apply-btn')) return;
+      const target = e.target; // 'apply' button element
+      // 'figure' element which is a parent elem of the apply button elem
+      const figureElem = target.parentNode.parentNode;
+      const captionValue = captionInput.value;
+      if (captionValue.trim() !== '') {
+        const figcaptionElem = document.createElement('figcaption');
+        figcaptionElem.className = 'ql-figcaption';
+        figcaptionElem.innerText = captionValue;
+        captionInput.value = '';
+        // for editing a caption, remove previous caption
+        if (figureElem.querySelector('.ql-figcaption')) {
+          figureElem.removeChild(figureElem.querySelector('.ql-figcaption'));
+        }
+        figureElem.appendChild(figcaptionElem);
+        figureElem.removeChild(captionInputWrapper);
+
+        figcaptionElem.addEventListener('click', openEditActionDiv);
+      }
+      else {
+        figureElem.removeChild(captionInputWrapper);
+      }
+    }
+
+    captionApplyBtn.addEventListener('click', applyCaption);
+
+
+    const openEditActionDiv = (e) => {
+      if (document.querySelector('.caption-input-wrapper')) return;
+      if (document.querySelector('.caption-edit-actions')) return;
+      const editActions = document.createElement('div');
+      const editBtn = document.createElement('button');
+      const deleteBtn = document.createElement('button');
+      const closeBtn = document.createElement('div');
+
+      editActions.className = 'caption-edit-actions';
+      editBtn.setAttribute('type', 'button');
+      editBtn.className = 'caption-edit-btn';
+      editBtn.innerText = 'EDIT';
+      deleteBtn.setAttribute('type', 'button');
+      deleteBtn.className = 'caption-delete-btn';
+      deleteBtn.innerText = 'DELETE';
+      closeBtn.className = 'close-edit-actions';
+      closeBtn.innerText = 'X';
+
+
+      editActions.appendChild(editBtn);
+      editActions.appendChild(deleteBtn);
+      editActions.appendChild(closeBtn);
+
+      editActions.addEventListener('click', openEditFigcaption);
+
+      deleteBtn.addEventListener('click', closeEditActionsDiv);
+
+      // close edit action div
+      closeBtn.addEventListener('click', (e) => {
+        e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+      });
+
+      e.target.parentNode.appendChild(editActions);
+    }
+
+    const openEditFigcaption = (e) => {
+      if (!e.target.classList.contains('caption-edit-btn')) return;
+      const figureElem = e.target.parentNode.parentNode;
+      figureElem.removeChild(e.target.parentNode); // remove edit actions div
+      figureElem.appendChild(captionInputWrapper);
+    }
+
+    const closeEditActionsDiv = (e) => {
+      if (!e.target.classList.contains('caption-delete-btn')) return;
+      const figureElem = e.target.parentNode.parentNode;
+      const figcaptionElem = e.target.parentNode.previousSibling;
+      figureElem.removeChild(figcaptionElem);
+      figureElem.removeChild(e.target.parentNode); // remove edit actions div
+    }
+
+
+    if (isPostSet) {
+      for (const figcaptionElem of document.querySelectorAll('.ql-figcaption')) {
+        figcaptionElem.addEventListener('click', openEditActionDiv);
+      }
+    }
+
+
+  }, [isPostSet]);
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);

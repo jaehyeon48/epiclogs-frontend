@@ -182,7 +182,7 @@ const AddPost = ({
           className="add-post__save-btn"
         >Save</button>
       </div>
-    </div>
+    </div >
   )
 }
 
