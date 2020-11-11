@@ -316,7 +316,12 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
           const imageData = e.target.result.match(/(?!.*,).*$/)[0];
           const uploadedUrl = await uploadImageToS3(nicknameRef.current.value,
             `${fileName}.${mimeType}`, Buffer.from(imageData, 'base64'));
-          quill.insertEmbed(quill.getLength() - 1, 'image', uploadedUrl);
+          if (quill.getSelection()) {
+            quill.insertEmbed(quill.getSelection().index, 'image', uploadedUrl);
+          }
+          else {
+            quill.insertEmbed(quill.getLength() - 1, 'image', uploadedUrl);
+          }
         }
       }
     }
