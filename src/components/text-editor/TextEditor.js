@@ -121,7 +121,6 @@ class ImageBlot extends BlockEmbed {
         }
         figureElem.appendChild(figcaptionElem);
         figureElem.removeChild(captionInputWrapper);
-
         figcaptionElem.addEventListener('click', openEditActionDiv);
       }
       else {
@@ -326,6 +325,11 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
       }
     }
   }
+
+  useEffect(() => {
+    // add prevent-scroll-to-top element
+    editorRef.current.firstChild.innerHTML = '<p class="prevent-scroll-to-top" contenteditable="false"></p><p></br></p>'
+  }, []);
 
   return (
     <React.Fragment>

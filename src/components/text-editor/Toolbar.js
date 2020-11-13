@@ -3,6 +3,7 @@ import React from 'react';
 import ColorPicker from './ColorPicker';
 
 const Toolbar = () => {
+
   return (
     <div id="editor-toolbar-container">
       <span className="ql-formats">
