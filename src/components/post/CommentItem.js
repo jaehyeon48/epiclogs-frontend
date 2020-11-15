@@ -2,20 +2,27 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import defaultAvatar from '../../img/default_avatar.png';
+
+import ReplyEditor from './ReplyEditor';
+import { loadCommentReply } from '../../actions/replyAction';
 require('dotenv').config();
 
 const CommentItem = ({
   auth,
   comment,
+  reply,
   loadPostComments,
-  setPostComments
+  setPostComments,
+  loadCommentReply
 }) => {
   const signal = axios.CancelToken.source();
   const [commenterAvatar, setCommenterAvatar] = useState('');
   const [userNickname, setUserNickname] = useState('');
   const [editCommentText, setEditCommentText] = useState('');
   const [isOpenCommentEditor, setIsOpenCommentEditor] = useState(false);
+  const [isOpenReplyEditor, setIsOpenReplyEditor] = useState(false);
   const [isEmptyComment, setIsEmptyComment] = useState(false);
+  const [commentReply, setCommentReply] = useState([]);
 
 
   // initializing edit comment text
@@ -58,6 +65,35 @@ const CommentItem = ({
     }
     return () => { signal.cancel(); }
   }, [comment]);
+
+  // load comment's reply
+  useEffect(() => {
+    if (comment && comment.commentId) {
+      (async () => {
+        try {
+          const res = await loadCommentReply(comment.commentId);
+          setCommentReply(res);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+  }, []);
+
+  // reload reply when a reply is newly created
+  useEffect(() => {
+    if (reply.reloadReply &&
+      reply.reloadReplyComment === comment.commentId) {
+      (async () => {
+        try {
+          const res = await loadCommentReply(comment.commentId);
+          setCommentReply(res);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+  }, [reply]);
 
   useEffect(() => {
     if (isEmptyComment && editCommentText.trim() !== '') {
@@ -114,6 +150,14 @@ const CommentItem = ({
 
   const handleChangeEditCommentText = (e) => {
     setEditCommentText(e.target.value);
+  }
+
+  const openReplyEditor = () => {
+    setIsOpenReplyEditor(true);
+  }
+
+  const closeReplyEditor = () => {
+    setIsOpenReplyEditor(false);
   }
 
   return (
@@ -184,12 +228,33 @@ const CommentItem = ({
             {comment.commentText}
           </div>
         )}
+      {isOpenReplyEditor ? (
+        <ReplyEditor
+          commentId={comment.commentId}
+          closeReplyEditor={closeReplyEditor} />
+      ) : (
+          <button
+            type="button"
+            className="comment__add-reply-btn"
+            onClick={openReplyEditor}
+          >
+            <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+              <path fill="currentColor" d="M352 240v32c0 6.6-5.4 12-12 12h-88v88c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-88h-88c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h88v-88c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v88h88c6.6 0 12 5.4 12 12zm96-160v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z" />
+            </svg>
+            Add a reply</button>
+        )}
+      <div className="comment__replys">
+        {commentReply.map((reply) => (
+          <div key={reply.replyId}>{reply.replyText}</div>
+        ))}
+      </div>
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
+  reply: state.reply
 });
 
-export default connect(mapStateToProps)(CommentItem);
+export default connect(mapStateToProps, { loadCommentReply })(CommentItem);
