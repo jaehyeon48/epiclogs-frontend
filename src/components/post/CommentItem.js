@@ -4,6 +4,7 @@ import axios from 'axios';
 import defaultAvatar from '../../img/default_avatar.png';
 
 import ReplyEditor from './ReplyEditor';
+import ReplyItem from './ReplyItem';
 import { loadCommentReply } from '../../actions/replyAction';
 require('dotenv').config();
 
@@ -243,9 +244,11 @@ const CommentItem = ({
             </svg>
             Add a reply</button>
         )}
-      <div className="comment__replys">
+      <div className="comment__replies">
         {commentReply.map((reply) => (
-          <div key={reply.replyId}>{reply.replyText}</div>
+          <ReplyItem
+            key={reply.replyId}
+            reply={reply} />
         ))}
       </div>
     </div>
