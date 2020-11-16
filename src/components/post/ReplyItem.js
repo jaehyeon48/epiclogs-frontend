@@ -35,7 +35,7 @@ const ReplyItem = ({
       <div className="reply__user-info">
         <div className="reply__user-avatar">
           <img
-            src={replyUserAvatar || defaultAvatar}
+            src={replyUserAvatar ? `https://epiclogs.tk/avatars/${replyUserAvatar}` : defaultAvatar}
             alt="reply commenter's avatar"
           />
         </div>
