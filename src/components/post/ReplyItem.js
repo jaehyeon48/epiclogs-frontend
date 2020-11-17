@@ -90,7 +90,7 @@ const ReplyItem = ({
           commentId={replyFromComment.replyId}
           closeReplyEditor={closeReplyEditor}
           isEditMode={true}
-          editReplyValue={replyFromComment.replyText}
+          editReplyValue={replyText}
         />
       ) : (
           <div className="reply-info">
