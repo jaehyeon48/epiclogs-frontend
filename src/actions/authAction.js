@@ -52,10 +52,12 @@ export const login = (loginFormData, history) => async (dispatch) => {
       payload: history
     });
     dispatch(loadUser());
+    return 0;
   } catch (error) {
     if (error.response.status === 400) {
       dispatch({ type: LOGIN_FAIL });
     }
+    return -1;
   }
 }
 

@@ -77,7 +77,10 @@ const Login = ({
 
       // if email and pw are valid, process form
       if (isEmailValid && isPwValid) {
-        login(loginForm, history);
+        const loginRes = await login(loginForm, history);
+        if (loginRes === -1) {
+          showAlert('Email or password is invalid.', 'error');
+        }
       }
       else {
         showAlert('Email or password is invalid.', 'error');
@@ -85,7 +88,10 @@ const Login = ({
     }
     else {
       if (!emailError && !pwError) {
-        login(loginForm, history);
+        const loginRes = await login(loginForm, history);
+        if (loginRes === -1) {
+          showAlert('Email or password is invalid.', 'error');
+        }
       }
       else {
         showAlert('Email or password is invalid.', 'error');

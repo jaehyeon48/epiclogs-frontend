@@ -44,7 +44,6 @@ export default function authReducer(state = initialState, action) {
       };
     case LOGIN_SUCCESS:
     case SIGN_UP_SUCCESS:
-      // payload === history
       payload.goBack();
       return {
         ...state,
