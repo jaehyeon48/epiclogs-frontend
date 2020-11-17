@@ -52,6 +52,7 @@
 }
 
 .reply-item {
+  position: relative;
   display: flex;
   margin: 1.2rem 0 1.5rem 2rem;
   padding: 0 0.3rem;
@@ -115,4 +116,27 @@
 
 .reply__is-edited {
   margin-left: 0.4rem;
+}
+
+.reply--deleted {
+  color: darken($dark-gray, 10%);
+}
+
+.reply__delete-btn {
+  position: absolute;
+  bottom: 25px;
+  right: 218px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background-color: $light-red;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1.6rem;
+
+  &:hover {
+    background-color: $dark-red;
+  }
 }

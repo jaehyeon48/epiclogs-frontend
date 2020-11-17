@@ -260,10 +260,12 @@ const CommentItem = ({
         </React.Fragment>
       )}
       <div className="comment__replies">
-        {commentReply.map((reply) => (
+        {commentReply && commentReply.map((reply) => (
           <ReplyItem
             key={reply.replyId}
-            replyFromComment={reply} />
+            replyFromComment={reply}
+            setCommentReply={setCommentReply}
+          />
         ))}
       </div>
     </div>
