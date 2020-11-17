@@ -37,7 +37,11 @@ export const HOME_REACHED_LAST = 'HOME_REACHED_LAST';
 export const MYPOST_REACHED_LAST = 'MYPOST_REACHED_LAST';
 
 /* Reply */
-export const LOAD_REPLY = 'LOAD_REPLY';
-export const LOAD_REPLY_ERROR = 'LOAD_REPLY_ERROR';
+export const LOAD_REPLIES = 'LOAD_REPLIES';
+export const LOAD_REPLIES_ERROR = 'LOAD_REPLIES_ERROR';
+export const LOAD_A_REPLY = 'LOAD_A_REPLY';
+export const LOAD_A_REPLY_ERROR = 'LOAD_A_REPLY_ERROR';
 export const ADD_REPLY = 'ADD_REPLY';
 export const ADD_REPLY_ERROR = 'ADD_REPLY_ERROR';
+export const EDIT_REPLY = 'EDIT_REPLY';
+export const EDIT_REPLY_ERROR = 'EDIT_REPLY_ERROR';

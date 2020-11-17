@@ -1,8 +1,10 @@
 .reply-editor {
-  margin-top: 2.3rem;
+  margin: 1.5rem 0;
   background-color: lighten($light-gray, 15%);
   padding: 1.3rem 1rem 1rem 2rem;
   border-radius: 0.3rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .reply-area-wrapper {
@@ -98,6 +100,10 @@
   line-height: 1.75;
   font-size: 1.8rem;
   word-break: keep-all;
+}
+
+.reply__editable {
+  cursor: pointer;
 }
 
 .reply__created-at {

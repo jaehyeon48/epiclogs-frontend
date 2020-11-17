@@ -83,8 +83,8 @@ const CommentItem = ({
 
   // reload reply when a reply is newly created
   useEffect(() => {
-    if (reply.reloadReply &&
-      reply.reloadReplyComment === comment.commentId) {
+    if (reply.reloadComment &&
+      reply.reloadCommentId === comment.commentId) {
       (async () => {
         try {
           const res = await loadCommentReply(comment.commentId);
@@ -252,7 +252,7 @@ const CommentItem = ({
         {commentReply.map((reply) => (
           <ReplyItem
             key={reply.replyId}
-            reply={reply} />
+            replyFromComment={reply} />
         ))}
       </div>
     </div>

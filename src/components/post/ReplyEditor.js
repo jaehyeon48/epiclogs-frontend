@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
-import { addReply } from '../../actions/replyAction';
+import {
+  addReply,
+  editReply
+} from '../../actions/replyAction';
 require('dotenv').config();
 
 const ReplyEditor = ({
   closeReplyEditor,
   commentId,
-  addReply
+  addReply,
+  editReply,
+  isEditMode = false,
+  editReplyValue
 }) => {
   const [isEmptyReply, setIsEmptyReply] = useState(false);
   const [addReplyText, setAddReplyText] = useState('');
@@ -18,6 +24,13 @@ const ReplyEditor = ({
     }
   }, [addReplyText, isEmptyReply]);
 
+  // when editing reply, set previous reply text value
+  useEffect(() => {
+    if (isEditMode && editReplyValue !== '') {
+      setAddReplyText(editReplyValue)
+    }
+  }, [isEditMode, editReplyValue]);
+
   const handleChangeEditReplyText = (e) => {
     setAddReplyText(e.target.value);
   }
@@ -25,6 +38,15 @@ const ReplyEditor = ({
   const handleAddReply = async () => {
     try {
       await addReply(addReplyText, commentId);
+      closeReplyEditor();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleEditReply = async () => {
+    try {
+      await editReply(addReplyText, commentId);
       closeReplyEditor();
     } catch (error) {
       console.error(error);
@@ -51,12 +73,15 @@ const ReplyEditor = ({
         <button
           type="button"
           className="add-reply-btn"
-          onClick={handleAddReply}
-        >Add</button>
+          onClick={isEditMode ? handleEditReply : handleAddReply}
+        >{isEditMode ? 'Edit' : 'Add'}</button>
       </div>
     </div>
   );
 }
 
 
-export default connect(null, { addReply })(ReplyEditor);
+export default connect(null, {
+  addReply,
+  editReply
+})(ReplyEditor);
