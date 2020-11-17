@@ -24,17 +24,22 @@ const CommentItem = ({
   const [isOpenReplyEditor, setIsOpenReplyEditor] = useState(false);
   const [isEmptyComment, setIsEmptyComment] = useState(false);
   const [commentReply, setCommentReply] = useState([]);
+  const [isCommentDeleted, setIsCommentDeleted] = useState(false);
 
 
   // initializing edit comment text
   useEffect(() => {
-    if (comment && comment.commentText) {
+    if (comment.isDeleted) {
+      setIsCommentDeleted(true);
+    }
+    else if (comment && comment.commentText) {
       setEditCommentText(comment.commentText);
     }
   }, [comment]);
 
+  // load commenter's avatar
   useEffect(() => {
-    if (comment && comment.userId) {
+    if (comment && comment.userId && !isCommentDeleted) {
       (async () => {
         try {
           const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/avatar/id/${comment.userId}`, { cancelToken: signal.token });
@@ -48,10 +53,11 @@ const CommentItem = ({
       })();
     }
     return () => { signal.cancel(); }
-  }, [comment]);
+  }, [comment, isCommentDeleted]);
 
+  // load commenter's nickname
   useEffect(() => {
-    if (comment && comment.userId) {
+    if (comment && comment.userId && !isCommentDeleted) {
       (async () => {
         try {
           const res = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user/nickname/${comment.userId}`, { cancelToken: signal.token });
@@ -65,7 +71,7 @@ const CommentItem = ({
       })();
     }
     return () => { signal.cancel(); }
-  }, [comment]);
+  }, [comment, isCommentDeleted]);
 
   // load comment's reply
   useEffect(() => {
@@ -176,14 +182,15 @@ const CommentItem = ({
             {userNickname}
           </div>
           <div className="comment-time">
-            {comment.createdAt.replace('T', ' ').slice(0, 19)}
+            {isCommentDeleted ? '' : comment.createdAt.replace('T', ' ').slice(0, 19)}
           </div>
         </div>
-        {comment && comment.isEdited === 1 && (
+        {isCommentDeleted ? '' : comment.isEdited === 1 && (
           <span className="comment__is-edited">&#40;edited&#41;</span>
         )}
         {auth && !auth.loading &&
-          auth.user.userId === comment.userId && !isOpenCommentEditor && (
+          auth.user.userId === comment.userId &&
+          !isOpenCommentEditor && !isCommentDeleted && (
             <div className="comment-actions">
               <button
                 type="button"
@@ -225,8 +232,8 @@ const CommentItem = ({
           </div>
         </div>
       ) : (
-          <div className="comment-text">
-            {comment.commentText}
+          <div className={isCommentDeleted ? 'comment-text comment--deleted' : 'comment-text'}>
+            {isCommentDeleted ? 'This comment has been deleted' : comment.commentText}
           </div>
         )}
       {auth && !auth.authLoading && auth.isAuthenticated && (
@@ -236,15 +243,19 @@ const CommentItem = ({
               commentId={comment.commentId}
               closeReplyEditor={closeReplyEditor} />
           ) : (
-              <button
-                type="button"
-                className="comment__add-reply-btn"
-                onClick={openReplyEditor}
-              >
-                <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                  <path fill="currentColor" d="M352 240v32c0 6.6-5.4 12-12 12h-88v88c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-88h-88c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h88v-88c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v88h88c6.6 0 12 5.4 12 12zm96-160v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z" />
-                </svg>
-            Add a reply</button>
+              <React.Fragment>
+                {!isCommentDeleted && (
+                  <button
+                    type="button"
+                    className="comment__add-reply-btn"
+                    onClick={openReplyEditor}
+                  >
+                    <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="plus-square" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                      <path fill="currentColor" d="M352 240v32c0 6.6-5.4 12-12 12h-88v88c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-88h-88c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h88v-88c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v88h88c6.6 0 12 5.4 12 12zm96-160v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h352c26.5 0 48 21.5 48 48zm-48 346V86c0-3.3-2.7-6-6-6H54c-3.3 0-6 2.7-6 6v340c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z" />
+                    </svg>
+                    Add a reply</button>
+                )}
+              </React.Fragment>
             )}
         </React.Fragment>
       )}
