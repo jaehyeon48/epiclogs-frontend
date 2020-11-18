@@ -33,7 +33,7 @@ const AddLink = ({ pos, quill, closeFunc }) => {
     <div
       className="editor-add-link-div add-link-not-close"
       style={{ top: `${topPos + 32}px`, left: `${leftPos}px` }}>
-      <div className="add-link-inputs">
+      <div className="add-link-inputs add-link-not-close">
         <label htmlFor="elti" className="add-link-not-close">Text </label>
         <input
           type="text"
@@ -44,8 +44,8 @@ const AddLink = ({ pos, quill, closeFunc }) => {
           onChange={handleChangeLinkTextVal}
         />
       </div>
-      <div className="add-link-inputs">
-        <label htmlFor="elli">Link </label>
+      <div className="add-link-inputs add-link-not-close">
+        <label htmlFor="elli" className="add-link-not-close">Link </label>
         <input
           type="text"
           id="elli"
