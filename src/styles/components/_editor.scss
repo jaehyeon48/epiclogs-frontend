@@ -121,23 +121,25 @@ h6 {
 
 .editor-add-link-div {
   position: absolute;
-  background-color: $white;
+  background-image: linear-gradient(to bottom, rgba(49, 49, 47, 0.99), #262625);
+  color: $white;
   box-shadow: 1px 1px 2px 1px $dark-gray;
   display: flex;
   flex-direction: column;
   width: 320px;
   padding: 1rem;
+  border-radius: 0.3rem;
 
   & > .editor-add-link-button {
-    margin-top: 0.8rem;
-    background-color: $indigo;
+    margin: 0.3rem auto;
+    width: 80px;
+    background: none;
     border: none;
     color: $white;
     padding: 0.5rem 0;
     cursor: pointer;
 
     &:hover {
-      background-color: darken($indigo, 20%);
       color: darken($white, 20%);
     }
   }
@@ -147,13 +149,20 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.8rem;
 
   & > input {
     width: 85%;
-    padding: 0.5rem;
+    padding: 0.7rem;
     font-size: 1.8rem;
     border: 1px solid $dark-gray;
+    border: none;
+    outline: none;
+    border-radius: 0.3rem;
+  }
+
+  & > input:focus {
+    box-shadow: 0 0 0 1px $white;
   }
 }
 
