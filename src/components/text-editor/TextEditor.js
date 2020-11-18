@@ -294,7 +294,7 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
       // if the container is already opened, do not render new one
       if (openAddLinkContainer) return;
       // get cursor's current position
-      setCursorPosition(quill.getBounds(quill.getLength()));
+      setCursorPosition(quill.getSelection());
       handleOpenAddLinkDiv();
     }
 

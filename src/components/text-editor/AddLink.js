@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 const AddLink = ({ pos, quill, closeFunc }) => {
+  const [topPos, setTopPos] = useState(quill.getBounds(pos.index).top);
+  const [leftPos, setLeftPos] = useState(quill.getBounds(pos.index).left);
   const [linkTextVal, setLinkTextVal] = useState('');
   const [linkVal, setLinkVal] = useState('');
 
@@ -13,13 +15,12 @@ const AddLink = ({ pos, quill, closeFunc }) => {
   }
 
   function processLink(e) {
-    const insertPosition = quill.getLength() - 1;
     if (linkVal) {
       if (linkTextVal === '') {
-        quill.insertText(insertPosition, linkVal, { 'link': linkVal });
+        quill.insertText(pos.index, linkVal, { 'link': linkVal });
       }
       else {
-        quill.insertText(insertPosition, linkTextVal, { 'link': linkVal });
+        quill.insertText(pos.index, linkTextVal, { 'link': linkVal });
       }
     }
     else {
@@ -31,7 +32,7 @@ const AddLink = ({ pos, quill, closeFunc }) => {
   return (
     <div
       className="editor-add-link-div add-link-not-close"
-      style={{ top: `${pos.top + 32}px`, left: `${pos.left}px` }}>
+      style={{ top: `${topPos + 32}px`, left: `${leftPos}px` }}>
       <div className="add-link-inputs">
         <label htmlFor="elti" className="add-link-not-close">Text </label>
         <input
