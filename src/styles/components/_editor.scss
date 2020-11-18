@@ -1,5 +1,6 @@
 #editor-toolbar-container {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   position: -webkit-sticky;
   position: sticky;
