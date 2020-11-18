@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import Quill from 'quill';
 
 import ColorPicker from './ColorPicker';
 
 const Toolbar = () => {
+  const icons = Quill.import('ui/icons');
+  useEffect(() => {
+    icons['code'] = `
+    <svg viewbox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+      <polyline class="ql-even ql-stroke" points="5 7 3 9 5 11"></polyline>
+      <polyline class="ql-even ql-stroke" points="13 7 15 9 13 11"></polyline>
+    </svg>`;
+  }, []);
 
   return (
     <div id="editor-toolbar-container">
@@ -22,6 +31,7 @@ const Toolbar = () => {
       </span>
       <span className="ql-formats">
         <button type="button" className="ql-blockquote"></button>
+        <button type="button" className="ql-code"></button>
         <button type="button" className="ql-code-block"></button>
       </span>
       <span className="ql-formats">
