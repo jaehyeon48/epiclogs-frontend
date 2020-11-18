@@ -95,6 +95,16 @@ h6 {
   font-size: 1.5rem !important;
 }
 
+.ql-editor a {
+  text-decoration: none;
+  color: #006dda;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .ql-align {
   width: 29px !important;
 }

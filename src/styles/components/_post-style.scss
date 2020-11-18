@@ -379,7 +379,12 @@
     font-size: 0.67em;
   }
   & a {
-    text-decoration: underline;
+    text-decoration: none;
+    color: #006dda;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
   & blockquote {
     margin: 2rem 0px;
