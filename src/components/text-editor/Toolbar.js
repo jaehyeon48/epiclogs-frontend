@@ -1,9 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Quill from 'quill';
 
 import ColorPicker from './ColorPicker';
+import EmojiPicker from './EmojiPicker'
 
-const Toolbar = () => {
+const Toolbar = ({
+  quill,
+  closeFunc,
+  isOpenEmojiPicker,
+  insertPos
+}) => {
+  const [recentlyUsedEmojis, setRecentlyUsedEmojis] = useState([]);
   const icons = Quill.import('ui/icons');
   useEffect(() => {
     icons['code'] = `
@@ -76,7 +83,17 @@ const Toolbar = () => {
         <button type="button" className="ql-link"></button>
         <button type="button" className="ql-image"></button>
         <button type="button" className="ql-video"></button>
+        <button type="button" className="ql-emoji"></button>
       </span>
+      {isOpenEmojiPicker && (
+        <EmojiPicker
+          quill={quill}
+          closeFunc={closeFunc}
+          insertPos={insertPos}
+          recentlyUsedEmojis={recentlyUsedEmojis}
+          setRecentlyUsedEmojis={setRecentlyUsedEmojis}
+        />
+      )}
     </div>
   );
 }

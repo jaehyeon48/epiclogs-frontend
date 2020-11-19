@@ -1,0 +1,71 @@
+.emoji-picker {
+  position: absolute;
+  top: 45px;
+  right: -1px;
+  z-index: 99;
+  color: $white;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 0.3rem;
+  background-image: linear-gradient(to bottom, rgba(49, 49, 47, 0.99), #262625);
+  width: 380px;
+}
+
+.emoji-classes {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  list-style-type: none;
+  padding: 0.4rem 0.2rem;
+  margin: 0.4rem 0 1rem;
+}
+
+.emoji-class-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.7rem;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;
+}
+
+.emoji-class-selected {
+  color: #0379e7;
+}
+
+.emoji-icons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0.5rem;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.emoji-icon {
+  cursor: pointer;
+  width: fit-content;
+  margin: 0.3rem;
+
+  &:hover {
+    box-shadow: 0 4px 0 -2px $white;
+  }
+}
+
+// use id instead of class due to the css specificity
+#close-emoji-picker-btn {
+  color: $white;
+  border: none;
+  background: none;
+  outline: none;
+  margin: 0.4rem auto 0;
+  width: fit-content !important;
+
+  &:hover {
+    color: #0379e7;
+  }
+}

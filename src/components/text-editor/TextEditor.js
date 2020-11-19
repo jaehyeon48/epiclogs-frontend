@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import Quill from 'quill';
+import quillEmoji from 'quill-emoji';
 import { v4 as uuidv4 } from 'uuid';
 import 'quill/dist/quill.snow.css';
 
@@ -224,6 +225,8 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
   const [openAddLinkContainer, setOpenAddLinkContainer] = useState(false);
   const [cursorPosition, setCursorPosition] = useState(0);
   const [quillState, setQuillState] = useState(null);
+  const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
+  const [emojiInsertPos, setEmojiInsertPos] = useState(1);
 
   useEffect(() => {
     const initiatedQuill = initiateQuill();
@@ -231,10 +234,36 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
   }, []);
 
   useEffect(() => {
+    const getEmojiInsertPosition = () => {
+      if (isOpenEmojiPicker) {
+        setEmojiInsertPos(quillState.getSelection());
+      }
+    }
+
+    if (quillState) {
+      quillState.root.addEventListener('click', getEmojiInsertPosition);
+      quillState.root.addEventListener('keyup', getEmojiInsertPosition);
+
+      if (!isOpenEmojiPicker) {
+        quillState.root.removeEventListener('click', getEmojiInsertPosition);
+        quillState.root.removeEventListener('keyup', getEmojiInsertPosition);
+      }
+    }
+  }, [quillState, isOpenEmojiPicker]);
+
+  useEffect(() => {
     if (editPostText) {
       editorRef.current.firstChild.innerHTML = editPostText;
     }
   }, [editPostText]);
+
+  const handleOpenEmojiPicker = () => {
+    setIsOpenEmojiPicker(true);
+  }
+
+  const handleCloseEmojiPicker = () => {
+    setIsOpenEmojiPicker(false);
+  }
 
   const handleOpenAddLinkDiv = () => {
     setOpenAddLinkContainer(true);
@@ -274,6 +303,7 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
     const quill = new Quill('#editor-container', {
       modules: {
         toolbar: '#editor-toolbar-container',
+        "emoji-toolbar": true,
         history: {
           delay: 800,
           maxStack: 500,
@@ -287,7 +317,7 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
     const toolbar = quill.getModule('toolbar');
     toolbar.addHandler('link', renderAddLinkContainer);
     toolbar.addHandler('image', saveImageToS3);
-
+    toolbar.addHandler('emoji', handleOpenEmojiPicker);
     return quill;
 
     function renderAddLinkContainer() {
@@ -333,7 +363,12 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
 
   return (
     <React.Fragment>
-      <Toolbar />
+      <Toolbar
+        isOpenEmojiPicker={isOpenEmojiPicker}
+        quill={quillState}
+        insertPos={emojiInsertPos}
+        closeFunc={handleCloseEmojiPicker}
+      />
       <div id="editor-container" ref={editorRef}>
         {openAddLinkContainer && (
           <AddLink pos={cursorPosition} quill={quillState} closeFunc={handleCloseAddLinkDiv} />
