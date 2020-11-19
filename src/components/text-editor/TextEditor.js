@@ -313,6 +313,15 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
       },
       theme: 'snow'
     });
+    quill.keyboard.addBinding({ key: 'C', ctrlKey: true, shiftKey: true },
+      function (range, context) {
+        if (context.format.code) {
+          this.quill.format('code', false);
+        }
+        else {
+          this.quill.format('code', true);
+        }
+      });
 
     const toolbar = quill.getModule('toolbar');
     toolbar.addHandler('link', renderAddLinkContainer);
