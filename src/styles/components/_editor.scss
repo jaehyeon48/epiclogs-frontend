@@ -42,6 +42,7 @@
 
 .ql-editor blockquote {
   border-left: 4px solid $indigo !important;
+  margin: 2rem 1.2rem;
 }
 
 .ql-editor code {
@@ -64,6 +65,12 @@
 /* button's active color */
 button.ql-active {
   color: $indigo !important;
+}
+
+.ql-editor ol > li,
+.ql-editor ul > li {
+  padding: 0.1rem;
+  margin: 0.7rem 0;
 }
 
 /* headers */
