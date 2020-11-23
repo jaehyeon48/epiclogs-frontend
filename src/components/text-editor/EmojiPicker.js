@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { emojiList } from '../data/emoji';
+import { emojiList } from '../data/emojiList';
 
 const EmojiPicker = ({
   quill,
@@ -8,29 +8,27 @@ const EmojiPicker = ({
   recentlyUsedEmojis,
   setRecentlyUsedEmojis
 }) => {
-  const [selectedClass, setSelectedClass] = useState('Smileys');
-  const insertEmoji = (e) => {
-    const emojiToInsert = e.target.innerText;
-    quill.insertText(insertPos, emojiToInsert);
+  const [selectedClass, setSelectedClass] = useState('Activities');
+  const insertEmoji = (emojiObj) => {
+    quill.clipboard.dangerouslyPasteHTML(insertPos.index, emojiObj.html);
     quill.focus();
-    setRecentlyUsedEmojis([emojiToInsert,
-      ...recentlyUsedEmojis.filter((emoji) => emoji !== emojiToInsert)]);
+    setRecentlyUsedEmojis([emojiObj,
+      ...recentlyUsedEmojis.filter((prevEmojiObj) => prevEmojiObj.unicode !== emojiObj.unicode)]);
   }
 
-  const handleSelectEmojiClass = (e) => {
-    setSelectedClass(e.target.dataset.emojiClass);
+  const handleSelectEmojiClass = (emojiClass) => {
+    setSelectedClass(emojiClass);
   }
 
   return (
     <div className="emoji-picker">
       <ul className="emoji-classes">
         <li
-          data-emoji-class="recently used emojis"
           className={selectedClass === 'recently used emojis' ?
             "emoji-class-item emoji-class-selected" :
             "emoji-class-item"}
           tabIndex={-1}
-          onClick={handleSelectEmojiClass}
+          onClick={() => handleSelectEmojiClass('recently used emojis')}
         >Recently Used</li>
         {Object.keys(emojiList).map((emojiClass, i) => (
           <li
@@ -40,7 +38,7 @@ const EmojiPicker = ({
               "emoji-class-item emoji-class-selected" :
               "emoji-class-item"}
             tabIndex={-1}
-            onClick={handleSelectEmojiClass}
+            onClick={() => handleSelectEmojiClass(emojiClass)}
           >
             {emojiClass}
           </li>
@@ -48,22 +46,26 @@ const EmojiPicker = ({
       </ul>
       <div className="emoji-icons">
         {selectedClass === 'recently used emojis' ? (
-          recentlyUsedEmojis.map((emojis, i) => (
+          recentlyUsedEmojis && recentlyUsedEmojis.map((emojiObj) => (
             <span
-              key={i}
+              key={emojiObj.unicode}
+              title={emojiObj.name}
               role="img"
+              aria-label={emojiObj.name}
               className="emoji-icon"
-              onClick={insertEmoji}
-            >{emojis}</span>
+              onClick={() => insertEmoji(emojiObj)}
+            >{emojiObj.emoji}</span>
           ))
         ) :
-          emojiList && emojiList[selectedClass].map((emojis, i) => (
+          emojiList && emojiList[selectedClass].map((emojiObj, i) => (
             <span
               key={i}
+              title={emojiObj.name}
               role="img"
+              aria-label={emojiObj.name}
               className="emoji-icon"
-              onClick={insertEmoji}
-            >{emojis}</span>
+              onClick={() => insertEmoji(emojiObj)}
+            >{emojiObj.emoji}</span>
           ))}
       </div>
       <button

@@ -226,30 +226,26 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
   const [cursorPosition, setCursorPosition] = useState(0);
   const [quillState, setQuillState] = useState(null);
   const [isOpenEmojiPicker, setIsOpenEmojiPicker] = useState(false);
-  const [emojiInsertPos, setEmojiInsertPos] = useState(1);
+  const [emojiInsertPos, setEmojiInsertPos] = useState({ index: 1, length: 0 });
 
   useEffect(() => {
     const initiatedQuill = initiateQuill();
     setQuillState(initiatedQuill);
-  }, []);
 
-  useEffect(() => {
     const getEmojiInsertPosition = () => {
-      if (isOpenEmojiPicker) {
-        setEmojiInsertPos(quillState.getSelection());
-      }
+      setEmojiInsertPos(initiatedQuill.getSelection());
     }
 
-    if (quillState) {
-      quillState.root.addEventListener('click', getEmojiInsertPosition);
-      quillState.root.addEventListener('keyup', getEmojiInsertPosition);
-
-      if (!isOpenEmojiPicker) {
-        quillState.root.removeEventListener('click', getEmojiInsertPosition);
-        quillState.root.removeEventListener('keyup', getEmojiInsertPosition);
-      }
+    if (initiatedQuill) {
+      initiatedQuill.root.addEventListener('click', getEmojiInsertPosition);
+      initiatedQuill.root.addEventListener('keyup', getEmojiInsertPosition);
     }
-  }, [quillState, isOpenEmojiPicker]);
+
+    return () => {
+      initiatedQuill.root.removeEventListener('click', getEmojiInsertPosition);
+      initiatedQuill.root.removeEventListener('keyup', getEmojiInsertPosition);
+    }
+  }, []);
 
   useEffect(() => {
     if (editPostText) {
