@@ -362,8 +362,8 @@ const TextEditor = ({ editorRef, nickname, editPostText = null }) => {
   }
 
   useEffect(() => {
-    // add prevent-scroll-to-top element
-    editorRef.current.firstChild.innerHTML = '<p class="prevent-scroll-to-top" contenteditable="false"></p><p></br></p>'
+    // add prevent-scroll-to-top element and cursor element
+    editorRef.current.firstChild.innerHTML = '<p class="prevent-scroll-to-top" contenteditable="false"></p><p></br></p><p class="ql-cursor" contenteditable="false"></p>'
   }, []);
 
   return (
