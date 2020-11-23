@@ -2,7 +2,7 @@ import React from 'react';
 
 const ColorPicker = () => {
   return (
-    <span className="ql-formats" defaultValue="#000000">
+    <span className="ql-formats" defaultValue="#000000" title="text color">
       <select className="ql-color">
         {/* dark to white */}
         <option value="#000000"></option>
@@ -93,7 +93,7 @@ const ColorPicker = () => {
         <option value="#20124d"></option>
         <option value="#4c1130"></option>
       </select>
-      <select className="ql-background">
+      <select className="ql-background" title="text background color">
         {/* dark to white */}
         <option value="#000000"></option>
         <option value="#434343"></option>
